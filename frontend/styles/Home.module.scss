@@ -28,6 +28,15 @@
   }
 }
 
+.historyPostBox {
+  background-color: $gray--400;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  padding: 0.4rem 0.2rem;
+  height: 340px;
+  overflow-y: scroll;
+}
+
 .newestPostTagBox {
   min-width: 3rem;
   max-width: 10rem;
