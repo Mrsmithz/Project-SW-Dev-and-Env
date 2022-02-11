@@ -54,3 +54,34 @@
   border-radius: 4rem;
 }
 
+.createPostHeaderBox {
+  width: 90%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.createPostHeaderText {
+  text-align: center;
+}
+
+@media screen and (min-width: 48em) {
+  
+  .createPostHeaderBox {
+    justify-content: space-between;
+    flex-direction: row;
+  }
+
+  .createPostHeaderText {
+    text-align: start;
+  }
+
+}
+
+@media screen and (min-width: 62em) {
+
+  .createPostHeaderBox {
+    width: 70%;
+  }
+
+}

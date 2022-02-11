@@ -1,8 +1,4 @@
-import type { NextPage } from 'next'
-
-import Head from 'next/head'
-import Image from 'next/image'
-import { SimpleGrid, Box, Grid, GridItem, Flex, Stack, Text, list } from '@chakra-ui/react'
+import { Grid, GridItem, Flex, Stack, Text } from '@chakra-ui/react'
 import { StarIcon } from '@chakra-ui/icons'
 
 import styles from '../../styles/Home.module.scss'
@@ -16,16 +12,16 @@ const fontSm = { base: '0.7rem', md: '0.8rem', lg: '0.8rem' }
 
 const NewestPostList = ({ posts }: Props) => {
 
-  const renderRating = (rating: number) => {
+  const renderRating = (rating: number, index: number) => {
     var starList: any[] = [];
     for (let i = 1; i <= 5; i++) {
       if (i <= rating){
         starList.push(
-          <StarIcon color="white" />
+          <StarIcon color="white" key={`newest-${index}-${i}`} />
         )
       } else {
         starList.push(
-          <StarIcon />
+          <StarIcon key={`newest-${index}-${i}`} />
         )
       }
     }
@@ -36,7 +32,7 @@ const NewestPostList = ({ posts }: Props) => {
     <>
       {posts.map((item, index) => (
 
-        <Grid templateColumns='repeat(12, 1fr)' className={styles.newestPostBox} key={index}>
+        <Grid templateColumns='repeat(12, 1fr)' className={styles.newestPostBox} key={`newest-${index}`}>
 
           <GridItem colSpan={2}>
             <Flex justify="center" align="center" height="100%">
@@ -60,14 +56,14 @@ const NewestPostList = ({ posts }: Props) => {
                 
                 <Flex flexWrap="wrap">
                   {item.tag.map((item: string, index: number) => (
-                    <Flex justify="center" align="center" key={index} className={styles.newestPostTagBox}>
+                    <Flex justify="center" align="center" key={`newest-tag-${index}`} className={styles.newestPostTagBox}>
                       <span>{item}</span>
                     </Flex>
                   ))}
                 </Flex>
 
                 <Stack direction="row" pl={1} mt={0}>
-                    { renderRating(item.rating) }
+                    { renderRating(item.rating, index) }
                 </Stack>
 
               </Stack>
