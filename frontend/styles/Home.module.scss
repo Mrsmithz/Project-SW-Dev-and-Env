@@ -2,7 +2,8 @@
 
 .container {
   padding: 4rem 1rem;
-  display: flex;
+  display:flex;
+  flex-wrap: wrap;
   justify-content: center;
   background-color: $bg-black;
 }
