@@ -7,6 +7,7 @@ import NewestPostList from '../components/home/NewestPostList'
 import RecommendedCarousel from '../components/carousel/RecommendedCarousel'
 
 import styles from '../styles/Home.module.scss'
+import HistoryPostList from '../components/home/HistoryPostList'
 
 const newestPostData = [
   {
@@ -71,6 +72,29 @@ const newestPostData = [
   },
 ]
 
+
+const historyPostData = [
+  {
+    id: "history1",
+    title : "History Post 1",
+    duration : "1m"
+  },
+  {
+    id: "history2",
+    title : "History Post 2",
+    duration : "2m"
+  },
+  {
+    id: "history3",
+    title : "History Post 3",
+    duration : "3m"
+  },
+  {
+    id: "history4",
+    title : "History Post 4",
+    duration : "4m"
+  }
+]
 const Home: NextPage = () => {
   return (
     <>
@@ -100,7 +124,11 @@ const Home: NextPage = () => {
           </GridItem>
 
           {/* History Grid */}
-          <GridItem colSpan={{ base: 12, md: 12, lg: 5 }}></GridItem>
+          <GridItem colSpan={{ base: 12, md: 12, lg: 5 }}>
+            <h1 className={styles.homeHeader}>History Post</h1>
+
+            <HistoryPostList posts={historyPostData}/>
+          </GridItem>
 
         </Grid>
 
