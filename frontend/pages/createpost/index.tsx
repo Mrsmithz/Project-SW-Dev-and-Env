@@ -5,11 +5,12 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { SimpleGrid, Box, Grid, GridItem, Flex, Stack, useColorModeValue, Text } from '@chakra-ui/react'
 import TaskProgress from '../../components/createpost/TaskProgress'
+import UploadFile from '../../components/createpost/UploadFile'
 
 import { Icon } from '@chakra-ui/react'
 import { MdDescription, MdEdit, MdVerified } from 'react-icons/md';
 
-import styles from '../../styles/Home.module.scss'
+import styles from '../../styles/CreatePost.module.scss'
 
 const tasks = [
   {
@@ -28,7 +29,21 @@ const tasks = [
 
 const CreatePost: NextPage = () => {
 
-  const [taskState, setTaskState] = useState(2);
+  const [taskState, setTaskState] = useState(1);
+
+  const renderComponent = () => {
+
+    if (taskState == 1) {
+      return ( <UploadFile /> );
+    }
+    else if (taskState == 2) {
+      
+    }
+    else if (taskState == 3) {
+      
+    }
+
+  }
 
   return (
     <>
@@ -38,7 +53,7 @@ const CreatePost: NextPage = () => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
-      <Box className={styles.container} >
+      <Stack className={styles.container} >
 
         {/* Header & Progess Bar */}
         <Flex className={styles.createPostHeaderBox}>
@@ -53,9 +68,9 @@ const CreatePost: NextPage = () => {
         </Flex>
 
         {/* Page */}
-        <Box />
+        { renderComponent() }
 
-      </Box>
+      </Stack>
     </>
   )
 }

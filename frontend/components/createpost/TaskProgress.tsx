@@ -7,9 +7,6 @@ type Props = {
   state: number
 }
 
-const fontNormal = { base: '0.9rem', md: '1rem', lg: '1rem' }
-const fontSm = { base: '0.7rem', md: '0.8rem', lg: '0.8rem' }
-
 const TaskProgress = ({ tasks, state }: Props) => {
 
   return (
