@@ -45,10 +45,10 @@ const RecommendedCarousel: NextPage<{ data: any }> = ({ data }) => {
                 onBreakpoint={(e) => {
                     if (e.currentBreakpoint === '320') {
                         $('.swiper-button-prev,.swiper-button-next').hide();
-                        $('.swiper-pagination-bullet').show();
+                        $('.swiper-pagination,.swiper-pagination-clickable,.swiper-pagination-bullets,.swiper-pagination-horizontal').show();
                     } else {
                         $('.swiper-button-prev,.swiper-button-next').show();
-                        $('.swiper-pagination-bullet').hide();
+                        $('.swiper-pagination,.swiper-pagination-clickable,.swiper-pagination-bullets,.swiper-pagination-horizontal').hide();
                     }
 
                 }}
