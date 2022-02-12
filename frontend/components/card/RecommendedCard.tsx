@@ -35,7 +35,7 @@ const RecommendedCard: NextPage<{ item: any }> = ({ item }) => {
                 )
             } else {
                 starList.push(
-                    <StarIcon ml={2} key={i}/>
+                    <StarIcon color="black" ml={2} key={i}/>
                 )
             }
         }
@@ -44,7 +44,7 @@ const RecommendedCard: NextPage<{ item: any }> = ({ item }) => {
     return (
         <Button
             height={220}
-            width={360}
+            width={380}
             // minWidth={400}
             style={{
                 whiteSpace: "normal",

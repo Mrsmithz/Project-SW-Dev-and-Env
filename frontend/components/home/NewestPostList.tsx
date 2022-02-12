@@ -1,4 +1,4 @@
-import { Grid, GridItem, Flex, Stack, Text } from '@chakra-ui/react'
+import { Grid, GridItem, Flex, Stack, Text, useColorModeValue } from '@chakra-ui/react'
 import { StarIcon } from '@chakra-ui/icons'
 
 import styles from '../../styles/Home.module.scss'
@@ -21,7 +21,7 @@ const NewestPostList = ({ posts }: Props) => {
         )
       } else {
         starList.push(
-          <StarIcon key={`newest-${index}-${i}`} />
+          <StarIcon color="black" key={`newest-${index}-${i}`} />
         )
       }
     }
@@ -40,7 +40,7 @@ const NewestPostList = ({ posts }: Props) => {
             </Flex>
           </GridItem>
 
-          <GridItem colSpan={5}>
+          <GridItem colSpan={5} color={useColorModeValue('#000000', '#000000')}>
             <Flex align="center" height="100%">
               <Stack>
                 <Text fontSize={fontNormal}>{item.author}</Text>
@@ -56,7 +56,9 @@ const NewestPostList = ({ posts }: Props) => {
                 
                 <Flex flexWrap="wrap">
                   {item.tag.map((item: string, index: number) => (
-                    <Flex justify="center" align="center" key={`newest-tag-${index}`} className={styles.newestPostTagBox}>
+                    <Flex justify="center" align="center" key={`newest-tag-${index}`} 
+                      className={styles.newestPostTagBox}
+                      color={useColorModeValue('#000000', '#000000')}>
                       <span>{item}</span>
                     </Flex>
                   ))}

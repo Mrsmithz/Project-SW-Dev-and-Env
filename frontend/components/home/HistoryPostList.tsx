@@ -1,5 +1,5 @@
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { Box, Divider, Grid, GridItem, IconButton, Stack, Text } from "@chakra-ui/react";
+import { Box, Divider, Grid, GridItem, IconButton, Stack, Text, useColorModeValue } from "@chakra-ui/react";
 import styles from "../../styles/Home.module.scss";
 
 type Props = {
@@ -17,11 +17,13 @@ type history = {
 const fontNormal = { base: "0.9rem", md: "1rem", lg: "1rem" };
 const fontSm = { base: "0.7rem", md: "0.8rem", lg: "0.8rem" };
 
+const paddingX = { base: 0, md: 4, lg: 6 };
+
 const History = ({ posts }: Props) => {
   const HistoryItem = ({ historyItem }: HistoryItem) => {
     return (
       <Stack px={3}>
-        <Grid templateColumns="repeat(6, 1fr)" gap={3} px={6}>
+        <Grid templateColumns="repeat(6, 1fr)" gap={3} px={paddingX} color={useColorModeValue('#FFFFFF', '#FFFFFF')}>
           <GridItem colSpan={3} h="10" style={{ display: "flex", alignItems: "flex-end", cursor: "pointer"}}>
             <Text fontSize={fontNormal}>{historyItem.title}</Text>
           </GridItem>

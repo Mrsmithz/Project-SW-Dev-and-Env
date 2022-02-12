@@ -106,12 +106,13 @@ const Home: NextPage = () => {
 
       <Box className={styles.container} >
 
-        <Box  width={{ base: '100%', sm: '90%', md: '80%', lg: '80%' }}>
+        <Box  width={{ base: '100%', sm: '90%', md: '90%', lg: '90%', xl: '75%' }}>
           <RecommendedCarousel data={newestPostData}></RecommendedCarousel>
         </Box>
+
         {/* Bottom Carousel Component */}
         <Grid templateColumns='repeat(12, 1fr)'
-          gap={6} width={{ base: '100%', sm: '90%', md: '80%', lg: '75%' }}
+          gap={6} width={{ base: '100%', sm: '90%', md: '90%', lg: '85%', xl: '70%' }}
         >
 
           {/* Newest Post Grid */}
