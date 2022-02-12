@@ -36,11 +36,13 @@ import "swiper/css/navigation";
 // import required modules
 import SwiperCore, { Autoplay, Pagination, Navigation } from "swiper";
 
+const headerMargin = { base: 0, md: 0, lg: 6, xl: 8 };
+
 const RecommendedCarousel: NextPage<{ data: any }> = ({ data }) => {
     const swiperRef = useRef(null) as any
     return (
         <Box w={'100%'} mb={10}>
-            <Text fontSize={'1.8rem'} color={'snow'} ml={10}>Recommended</Text>
+            <Text fontSize={'1.8rem'} color={'snow'} ml={headerMargin}>Recommended</Text>
             <Swiper
                 onBreakpoint={(e) => {
                     if (e.currentBreakpoint === '320') {
@@ -69,13 +71,13 @@ const RecommendedCarousel: NextPage<{ data: any }> = ({ data }) => {
                 className="mySwiper"
                 slidesPerView={3}
                 breakpoints={{
-                    320: {
+                    320 : {
                         slidesPerView: 1,
                     },
-                    530: {
+                    720: {
                         slidesPerView: 1,
                     },
-                    1170: {
+                    980: {
                         slidesPerView: 2,
                     },
                     1725: {
