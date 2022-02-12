@@ -1,16 +1,17 @@
 import type { NextPage } from "next";
 import React from "react";
 import { useDropzone } from "react-dropzone";
-import { Box, Text, Center, useColorModeValue, Image } from "@chakra-ui/react";
+import { Box, Text, Center, useColorModeValue, Image, Stack } from "@chakra-ui/react";
 
 type Props = {
-  posts: any[];
 };
 
-const UploadFile = ({}: Props) => {
+const size = { base: '80%', md: '70%', lg: '60%' }
+
+const UploadFile = () => {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
 
-  const files = acceptedFiles.map((file) => (
+  const files = acceptedFiles.map((file: any) => (
     <li key={file.path}>
       {file.path}
     </li>
@@ -18,32 +19,39 @@ const UploadFile = ({}: Props) => {
 
   return (
     <>
-      <Center
-        p={10}
-        h={350}
-        w={"100%"}
-        borderRadius={20}
-        bg={useColorModeValue("blue.100", "gray.500")}
-        {...getRootProps({ className: "dropzone" })}
-        mt={10}
-        borderBlockEndColor="black"
-        textAlign={"center"}
-      >
-        <input {...getInputProps()} />
-        <Box>
-          <Center mb={5}>
-            <Image
-              src="https://findicons.com/files/icons/1579/devine/256/file.png"
-              alt="image"
-              boxSize={"7rem"}
-            ></Image>
-          </Center>
-          <Text>Drag and drop some files here, or click to select files.</Text>
+      <Stack>
+
+        <Center
+          p={10}
+          h={350}
+          w={size}
+          borderRadius={20}
+          bg={useColorModeValue("blue.100", "gray.500")}
+          {...getRootProps({ className: "dropzone" })}
+          mt={10}
+          borderBlockEndColor="black"
+          textAlign={"center"}
+          alignSelf="center"
+        >
+
+          <input {...getInputProps()} />
+          <Box>
+            <Center mb={5}>
+              <Image
+                src="https://findicons.com/files/icons/1579/devine/256/file.png"
+                alt="image"
+                boxSize={"7rem"}
+              ></Image>
+            </Center>
+            <Text>Drag and drop some files here, or click to select files.</Text>
+          </Box>
+        </Center>
+
+        <Box mt={10} p={1} w={size} alignSelf="center">
+          {files}
         </Box>
-      </Center>
-      <Box mt={10} p={1}>
-        {files}
-      </Box>
+
+      </Stack>
     </>
   );
 };
