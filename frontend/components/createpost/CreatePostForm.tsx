@@ -15,7 +15,8 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
-  Select
+  Select,
+  useDisclosure
 } from '@chakra-ui/react'
 
 import { AddIcon } from '@chakra-ui/icons'
@@ -26,15 +27,15 @@ import styles from '../../styles/CreatePost.module.scss'
 type Props = {
 }
 
+const containerWidth = { base: '100%', sm: '90%', md: '90%', lg: '85%', xl: '70%' };
+
 const permissionWidth = { base: "100%", md: "50%", lg: "30%" };
 const dropzoneWidth = { base: "9rem", md: "8rem", lg: "9rem", xl: '9rem' };
 const dropzoneHeight = { base: "13rem", md: "12rem", lg: "13rem", xl: '13rem' };
 
 const CreatePostForm = () => {
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [title, setTitle] = useState('');
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
@@ -69,7 +70,7 @@ const CreatePostForm = () => {
       newTag.push(tagInput);
       setTagInput("");
       setTag(newTag);
-      closeModal()
+      onClose();
     }
   }
 
@@ -82,7 +83,7 @@ const CreatePostForm = () => {
 
   return (
     <Grid templateColumns='repeat(2, 1fr)'
-      gap={6} width={{ base: '100%', sm: '90%', md: '90%', lg: '85%', xl: '70%' }}
+      gap={6} width={containerWidth}
       alignSelf="center" color="white"
     >
 
@@ -143,7 +144,7 @@ const CreatePostForm = () => {
             ))}
 
             {tag.length < 5 ? (
-              <AddIcon marginLeft="0.8rem" cursor="pointer" onClick={() => openModal()} />
+              <AddIcon marginLeft="0.8rem" cursor="pointer" onClick={onOpen} />
             ) : null}
 
           </Flex>
@@ -196,11 +197,11 @@ const CreatePostForm = () => {
 
       </GridItem>
 
-      <Modal isOpen={isModalOpen} onClose={() => closeModal()} isCentered>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader></ModalHeader>
-          <ModalCloseButton onClick={() => closeModal()} />
+          <ModalCloseButton onClick={onClose} />
           <ModalBody paddingTop="1rem">
             <Input
               id='tagInput'
