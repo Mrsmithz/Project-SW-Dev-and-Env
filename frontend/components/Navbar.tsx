@@ -29,22 +29,28 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { MoonIcon, SunIcon, BellIcon } from "@chakra-ui/icons";
+import NextLink from "next/link";
 
-const Links = ["Home", "Forum", "Ranking"];
+const Links = [
+  { name: "Home", path: "/" },
+  { name: "Forum", path: "/forum" },
+  { name: "Ranking", path: "/ranking" },
+];
 
-const NavLink = ({ children }: { children: ReactNode }) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={"md"}
-    _hover={{
-      textDecoration: "none",
-      bg: useColorModeValue("gray.200", "gray.700"),
-    }}
-    href={"#"}
-  >
-    {children}
-  </Link>
+const NavLink = ({ children, page }: { children: ReactNode; page: any }) => (
+  <NextLink href={page} passHref>
+    <Link
+      px={2}
+      py={1}
+      rounded={"md"}
+      _hover={{
+        textDecoration: "none",
+        bg: useColorModeValue("gray.200", "gray.700"),
+      }}
+    >
+      {children}
+    </Link>
+  </NextLink>
 );
 
 export default function Simple() {
@@ -54,7 +60,13 @@ export default function Simple() {
 
   return (
     <>
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4} position="fixed" width={"100%"} zIndex={100}>
+      <Box
+        bg={useColorModeValue("gray.100", "gray.900")}
+        px={4}
+        position="fixed"
+        width={"100%"}
+        zIndex={100}
+      >
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
             size={"md"}
@@ -73,7 +85,9 @@ export default function Simple() {
               display={{ base: "none", md: "flex" }}
             >
               {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+                <NavLink key={link.name} page={link.path}>
+                  {link.name}
+                </NavLink>
               ))}
             </HStack>
           </HStack>
@@ -157,7 +171,9 @@ export default function Simple() {
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4} alignItems="center">
               {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+                <NavLink key={link.name} page={link.path}>
+                  {link.name}
+                </NavLink>
               ))}
               <Box onClick={toggleColorMode}>
                 {colorMode === "light" ? (
@@ -171,17 +187,21 @@ export default function Simple() {
           </Box>
         ) : null}
 
-        <Modal isOpen={openModal} onClose={() => setOpenModal(false)} isCentered>
+        <Modal
+          isOpen={openModal}
+          onClose={() => setOpenModal(false)}
+          isCentered
+        >
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Modal Title</ModalHeader>
             <ModalCloseButton onClick={() => setOpenModal(false)} />
             <ModalBody>
-                <Box>Noti 1</Box>
-                <Box>Noti 2</Box>
-                <Box>Noti 3</Box>
-                <Box>Noti 4</Box>
-                <Box>Noti 5</Box>
+              <Box>Noti 1</Box>
+              <Box>Noti 2</Box>
+              <Box>Noti 3</Box>
+              <Box>Noti 4</Box>
+              <Box>Noti 5</Box>
             </ModalBody>
 
             <ModalFooter>

@@ -13,6 +13,7 @@ import {
   SimpleGrid,
   Button,
 } from "@chakra-ui/react";
+import Link from "next/link";
 
 type Props = {};
 
@@ -25,7 +26,7 @@ const PreviewPost = () => {
         <Center
           w={size}
           bg={useColorModeValue("blue.100", "gray.500")}
-          p={{base: 5, lg: 10}}
+          p={{ base: 5, lg: 10 }}
           borderRadius={20}
           alignSelf="center"
           mt={5}
@@ -57,7 +58,7 @@ const PreviewPost = () => {
             <GridItem colSpan={{ base: 12, lg: 8, md: 12, sm: 12 }}>
               <Box
                 w={"100%"}
-                h={{base: "150%", lg:"100%"}}
+                h={{ base: "150%", lg: "100%" }}
                 p={4}
                 bg={useColorModeValue("gray.100", "gray.600")}
                 borderRadius={20}
@@ -81,14 +82,23 @@ const PreviewPost = () => {
                     <Text>Tag</Text>
                   </GridItem>
                   <GridItem colSpan={10}>
-                    <Tag ml={2} colorScheme="teal">Tag 1</Tag>
-                    <Tag ml={2} colorScheme="teal">Tag 2</Tag>
-                    <Tag ml={2} colorScheme="teal">Tag 3</Tag>
+                    <Tag ml={2} colorScheme="teal">
+                      Tag 1
+                    </Tag>
+                    <Tag ml={2} colorScheme="teal">
+                      Tag 2
+                    </Tag>
+                    <Tag ml={2} colorScheme="teal">
+                      Tag 3
+                    </Tag>
                   </GridItem>
                 </Grid>
               </Box>
             </GridItem>
-            <GridItem colSpan={{base: 12, lg: 3, md: 12, sm: 12}} mt={{base: 100, lg: 5}}>
+            <GridItem
+              colSpan={{ base: 12, lg: 3, md: 12, sm: 12 }}
+              mt={{ base: 100, lg: 5 }}
+            >
               <Center h={"100%"}>
                 <Button colorScheme="blue" variant="solid">
                   Download File
@@ -96,24 +106,30 @@ const PreviewPost = () => {
               </Center>
             </GridItem>
             <GridItem colSpan={1}></GridItem>
-            <GridItem colSpan={{base: 12, lg: 6, md: 12, sm: 12}} mt={5}>
+            <GridItem colSpan={{ base: 12, lg: 6, md: 12, sm: 12 }} mt={5}>
               <Text fontSize={20}>Preview</Text>
               <SimpleGrid columns={3} spacing={4}>
-                <Box bg={"gray.300"} h={{base: 150, lg: 220}}></Box>
-                <Box bg={"gray.300"} h={{base: 150, lg: 220}}></Box>
-                <Box bg={"gray.300"} h={{base: 150, lg: 220}}></Box>
+                <Box bg={"gray.300"} h={{ base: 150, lg: 220 }}></Box>
+                <Box bg={"gray.300"} h={{ base: 150, lg: 220 }}></Box>
+                <Box bg={"gray.300"} h={{ base: 150, lg: 220 }}></Box>
               </SimpleGrid>
             </GridItem>
-            <GridItem colSpan={{base: 12, lg: 2, md: 12, sm: 12}} alignSelf="flex-end" mt={5}>
+            <GridItem
+              colSpan={{ base: 12, lg: 2, md: 12, sm: 12 }}
+              alignSelf="flex-end"
+              mt={5}
+            >
               <Flex justify={"center"}>
                 <Button w={"80%"} colorScheme="blue" variant="solid">
                   Back
                 </Button>
               </Flex>
               <Flex justify={"center"}>
-                <Button w={"80%"} colorScheme="blue" variant="solid" mt={5}>
-                  Finish
-                </Button>
+                <Link href={"/"} passHref>
+                  <Button w={"80%"} colorScheme="blue" variant="solid" mt={5}>
+                    Finish
+                  </Button>
+                </Link>
               </Flex>
             </GridItem>
           </Grid>
