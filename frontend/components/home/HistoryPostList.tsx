@@ -15,7 +15,6 @@ type history = {
 };
 
 const fontNormal = { base: "0.9rem", md: "1rem", lg: "1rem" };
-const fontSm = { base: "0.7rem", md: "0.8rem", lg: "0.8rem" };
 
 const paddingX = { base: 0, md: 4, lg: 6 };
 
