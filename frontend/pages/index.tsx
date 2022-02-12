@@ -8,6 +8,7 @@ import RecommendedCarousel from '../components/carousel/RecommendedCarousel'
 
 import styles from '../styles/Home.module.scss'
 import HistoryPostList from '../components/home/HistoryPostList'
+import Fab from '../components/createpost/Fab'
 
 const newestPostData = [
   {
@@ -132,7 +133,7 @@ const Home: NextPage = () => {
           </GridItem>
 
         </Grid>
-
+        <Fab></Fab>
       </Box>
     </>
   )

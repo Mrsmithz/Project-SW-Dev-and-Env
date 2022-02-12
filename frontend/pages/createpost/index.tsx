@@ -1,4 +1,4 @@
-import type { NextPage } from 'next'
+import type { NextPage } from "next";
 import { useState } from "react";
 
 import Head from 'next/head'
@@ -27,14 +27,13 @@ const tasks = [
     taskName: "Confirm",
     icon: <Icon as={MdVerified} />
   },
-]
+];
 
 const CreatePost: NextPage = () => {
 
-  const [taskState, setTaskState] = useState(2);
-
+  const [taskState, setTaskState] = useState(1);
+  
   const renderComponent = () => {
-
     if (taskState == 1) {
       return (<UploadFile />);
     }
@@ -44,37 +43,35 @@ const CreatePost: NextPage = () => {
     else if (taskState == 3) {
       return (<PreviewPost />);
     }
-
-  }
+  };
 
   return (
     <>
-
       <Head>
         <title>Create Post</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
-      <Stack className={styles.container} >
-
+      <Stack className={styles.container}>
         {/* Header & Progess Bar */}
         <Flex className={styles.createPostHeaderBox}>
-
           <Stack className={styles.createPostHeaderText}>
-            <Text color={useColorModeValue("white", "white")} fontSize="2rem">Create Post</Text>
-            <Text color={useColorModeValue("white", "white")} fontSize="1.3rem">สร้างโพสต์ใหม่</Text>
+            <Text color={useColorModeValue("white", "white")} fontSize="2rem">
+              Create Post
+            </Text>
+            <Text color={useColorModeValue("white", "white")} fontSize="1.3rem">
+              สร้างโพสต์ใหม่
+            </Text>
           </Stack>
 
           <TaskProgress tasks={tasks} state={taskState} />
-
         </Flex>
 
         {/* Page */}
         {renderComponent()}
-
       </Stack>
     </>
-  )
-}
+  );
+};
 
-export default CreatePost
+export default CreatePost;
