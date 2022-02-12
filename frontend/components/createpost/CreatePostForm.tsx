@@ -1,11 +1,8 @@
-import React, { useState, useCallback } from "react";
-import { useDropzone } from "react-dropzone";
+import React, { useState } from "react";
 
 import {
   Box, Flex, Stack, Text, Grid, GridItem, Input, Textarea, FormControl,
   FormLabel,
-  FormErrorMessage,
-  FormHelperText,
   useColorModeValue,
   Modal,
   ModalOverlay,
@@ -19,7 +16,7 @@ import {
   useDisclosure
 } from '@chakra-ui/react'
 
-import { AddIcon } from '@chakra-ui/icons'
+import { AddIcon, CloseIcon } from '@chakra-ui/icons'
 import { MdImageSearch } from 'react-icons/md';
 
 import styles from '../../styles/CreatePost.module.scss'
@@ -34,6 +31,8 @@ const dropzoneWidth = { base: "9rem", md: "8rem", lg: "9rem", xl: '9rem' };
 const dropzoneHeight = { base: "13rem", md: "12rem", lg: "13rem", xl: '13rem' };
 
 const CreatePostForm = () => {
+
+  const inputRef = React.createRef<HTMLInputElement>();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -55,14 +54,24 @@ const CreatePostForm = () => {
 
   const [images, setImages] = useState<File[]>([]);
 
-  const onDrop = useCallback(acceptedFiles => {
-    var newImage = [...images];
-    newImage.push(acceptedFiles);
-    setImages(newImage);
+  const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
 
-    console.log(newImage)
-  }, [])
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+    if (!e.target.files || e.target.files.length === 0) {
+      return
+    }
+
+    if (e.target.files[0].type == 'image/png' || e.target.files[0].type == 'image/jpeg') {
+      if (images.length < 3) {
+        var newImage = [...images];
+        newImage.push(e.target.files[0]);
+        setImages(newImage);
+      }
+    }
+
+    const element = e.target as HTMLInputElement;
+    element.value = '';
+
+  }
 
   const addTag = () => {
     if (tag.length < 5) {
@@ -79,6 +88,58 @@ const CreatePostForm = () => {
     var newTag = [...tag];
     newTag.splice(tag.indexOf(e.target.innerText), 1);
     setTag(newTag);
+  }
+
+  const deleteImage = (index: number) => {
+    console.log(index)
+    var newImageList = [...images];
+    newImageList.splice(index, 1);
+    setImages(newImageList);
+  }
+
+  const renderPreviewImage = () => {
+
+    var imageList = [];
+
+    for (let i = 0; i < 3; i++) {
+      if (i < images.length) {
+        imageList.push(
+
+          <Box className={styles.previewImage}
+            width={dropzoneWidth} height={dropzoneHeight}
+            key={`image-${i}`}>
+            <CloseIcon className={styles.deleteImageButton} onClick={() => deleteImage(i)} />
+            <img src={URL.createObjectURL(images[i])} />
+          </Box>
+
+        )
+      } else {
+        imageList.push(
+
+          <Box className={styles.imageDropzone}
+            width={dropzoneWidth} height={dropzoneHeight}
+            cursor="pointer"
+            onClick={() => imageInputHandler()}
+            key={`image-${i}`}>
+            <input type='file' onChange={onSelectFile} ref={inputRef} style={{ display: 'none' }} />
+            <Stack width="100%" height="100%"
+              display="flex" justifyContent="center" alignItems="center">
+              <MdImageSearch color="black" fontSize="4rem" />
+              <Text>Drop Image Here</Text>
+            </Stack>
+          </Box>
+          
+        )
+      }
+    }
+
+    return imageList;
+
+  }
+
+  const imageInputHandler = () => {
+    if (inputRef.current)
+      inputRef.current.click()
   }
 
   return (
@@ -171,17 +232,8 @@ const CreatePostForm = () => {
           <Text fontSize="1.5rem">Preview Image</Text>
 
           <Flex flexWrap="wrap">
-            
-            <Box className={styles.imageDropzone}
-              width={dropzoneWidth} height={dropzoneHeight}
-              {...getRootProps()}>
-              <input {...getInputProps()} />
-              <Stack width="100%" height="100%"
-                display="flex" justifyContent="center" alignItems="center">
-                <MdImageSearch color="black" fontSize="4rem" />
-                <Text>Drop Image Here</Text>
-              </Stack>
-            </Box>
+
+            {renderPreviewImage()}
 
           </Flex>
 
