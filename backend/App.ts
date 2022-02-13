@@ -14,12 +14,12 @@ app.use(cors())
 app.use(express.json())
 
 
-app.get('/health', (req : Request, res : Response, next : NextFunction) : Response => {
+app.get('/api/health', (req : Request, res : Response, next : NextFunction) : Response => {
     return res.json({
         status:'UP'
     })
 })
 
-app.post('/upload', handlePDFUpload, DocumentProcessor)
+app.post('/api/upload', handlePDFUpload, DocumentProcessor)
 
 export { app }

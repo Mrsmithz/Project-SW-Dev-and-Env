@@ -128,7 +128,7 @@ const CreatePostForm = () => {
               <Text>Drop Image Here</Text>
             </Stack>
           </Box>
-          
+
         )
       }
     }
@@ -197,7 +197,7 @@ const CreatePostForm = () => {
             {tag.map((item: string, index: number) => (
               <Flex justify="center" align="center" key={`newest-tag-${index}`}
                 className={styles.tagBox}
-                color={useColorModeValue('#000000', '#000000')}
+                color={'black'}
                 cursor="pointer"
                 onClick={(e) => deleteTag(e)}>
                 <span>{item}</span>

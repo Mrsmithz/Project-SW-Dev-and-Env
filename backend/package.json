@@ -4,7 +4,8 @@
   "description": "A backend for Docker application",
   "main": "index.ts",
   "scripts": {
-    "serve": "nodemon index.ts",
+    "dev": "nodemon index.ts",
+    "serve": "ts-node index.ts",
     "test": "jest --coverage"
   },
   "repository": {

@@ -40,7 +40,7 @@ const NewestPostList = ({ posts }: Props) => {
             </Flex>
           </GridItem>
 
-          <GridItem colSpan={5} color={useColorModeValue('#000000', '#000000')}>
+          <GridItem colSpan={5} color={'black'}>
             <Flex align="center" height="100%">
               <Stack>
                 <Text fontSize={fontNormal}>{item.author}</Text>
@@ -53,12 +53,12 @@ const NewestPostList = ({ posts }: Props) => {
           <GridItem colSpan={5}>
             <Flex justify="center" align="center" height="100%">
               <Stack w="100%">
-                
+
                 <Flex flexWrap="wrap">
                   {item.tag.map((item: string, index: number) => (
-                    <Flex justify="center" align="center" key={`newest-tag-${index}`} 
+                    <Flex justify="center" align="center" key={`newest-tag-${index}`}
                       className={styles.newestPostTagBox}
-                      color={useColorModeValue('#000000', '#000000')}>
+                      color={'black'}>
                       <span>{item}</span>
                     </Flex>
                   ))}
