@@ -33,7 +33,7 @@ const tasks = [
 
 const CreatePost: NextPage = () => {
 
-  const [taskState, setTaskState] = useState(2);
+  const [taskState, setTaskState] = useState(1);
   const [postData, setPostData] = useState<CreatedPost>({
     title: "",
     description: "",
@@ -101,4 +101,4 @@ const CreatePost: NextPage = () => {
   );
 };
 
-export default CreatePost;
+export default CreatePost
