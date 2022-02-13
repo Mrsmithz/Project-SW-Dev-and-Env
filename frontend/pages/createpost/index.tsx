@@ -42,10 +42,11 @@ const CreatePost: NextPage = () => {
     permission: "",
     image: []
   });
+  const [file, setFile] = useState<File | null>(null)
 
   const renderComponent = () => {
     if (taskState == 1) {
-      return (<UploadFile />);
+      return (<UploadFile toNextPage={()=>goToPreviewPage()} file={file} setFile={(file:File | null)=>setFile(file)}/>);
     }
     else if (taskState == 2) {
       return (<CreatePostForm toNextPage={(data: CreatedPost) => getDataFromForm(data)}
@@ -56,6 +57,9 @@ const CreatePost: NextPage = () => {
     }
   };
 
+  const goToPreviewPage = () =>{
+    setTaskState(2);
+  }
   const getDataFromForm = (data: CreatedPost) => {
     console.log(data);
     setPostData(data);
