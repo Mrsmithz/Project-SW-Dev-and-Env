@@ -1,0 +1,35 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "A backend for Docker application",
+  "main": "index.ts",
+  "scripts": {
+    "serve": "nodemon index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mrsmithz/Project-SW-Dev-and-Env.git"
+  },
+  "author": "Mrsmithz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Mrsmithz/Project-SW-Dev-and-Env/issues"
+  },
+  "homepage": "https://github.com/Mrsmithz/Project-SW-Dev-and-Env#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "http": "^0.0.1-security",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^17.0.17",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.5.0",
+    "typescript": "^4.5.5"
+  }
+}
