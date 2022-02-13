@@ -14,6 +14,8 @@ import { MdDescription, MdEdit, MdVerified } from 'react-icons/md';
 
 import styles from '../../styles/CreatePost.module.scss'
 
+import { CreatedPost } from '../../model/CreatedPost'
+
 const tasks = [
   {
     taskName: "Upload File",
@@ -31,19 +33,40 @@ const tasks = [
 
 const CreatePost: NextPage = () => {
 
-  const [taskState, setTaskState] = useState(1);
-  
+  const [taskState, setTaskState] = useState(2);
+  const [postData, setPostData] = useState<CreatedPost>({
+    title: "",
+    description: "",
+    contact: "",
+    tag: [],
+    permission: "",
+    image: []
+  });
+
   const renderComponent = () => {
     if (taskState == 1) {
       return (<UploadFile />);
     }
     else if (taskState == 2) {
-      return (<CreatePostForm />);
+      return (<CreatePostForm toNextPage={(data: CreatedPost) => getDataFromForm(data)}
+        backPage={() => backButtonHandler()} />);
     }
     else if (taskState == 3) {
-      return (<PreviewPost />);
+      return (<PreviewPost postData={postData} backPage={() => backButtonHandler()} />);
     }
   };
+
+  const getDataFromForm = (data: CreatedPost) => {
+    console.log(data);
+    setPostData(data);
+    setTaskState(3);
+  }
+
+  const backButtonHandler = () => {
+    if (taskState > 1) {
+      setTaskState(taskState - 1);
+    }
+  }
 
   return (
     <>

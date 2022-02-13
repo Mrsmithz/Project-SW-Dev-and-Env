@@ -15,11 +15,18 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 
-type Props = {};
+import styles from '../../styles/CreatePost.module.scss'
+
+import { CreatedPost } from '../../model/CreatedPost'
+
+type Props = {
+  postData: CreatedPost,
+  backPage: Function
+};
 
 const size = { base: "100%", md: "80%", lg: "60%" };
 
-const PreviewPost = () => {
+const PreviewPost = ({ postData, backPage }: Props) => {
   return (
     <>
       <Stack>
@@ -50,7 +57,7 @@ const PreviewPost = () => {
               </Center>
               <Center>
                 <Text fontSize={{ base: 20, lg: 20, md: 40, sm: 40 }}>
-                  Contract
+                  {postData.contact}
                 </Text>
               </Center>
             </GridItem>
@@ -58,21 +65,21 @@ const PreviewPost = () => {
             <GridItem colSpan={{ base: 12, lg: 8, md: 12, sm: 12 }}>
               <Box
                 w={"100%"}
-                h={{ base: "150%", lg: "100%" }}
-                p={4}
+                p={5}
                 bg={useColorModeValue("gray.100", "gray.600")}
                 borderRadius={20}
               >
+                <Text fontSize={20}>Title : { postData.title } </Text>
                 <Text fontSize={20}>Description</Text>
                 <Box
                   bg={useColorModeValue("blue.200", "gray.700")}
                   p={3}
                   borderRadius={10}
-                  h={"50%"}
+                  minH="8rem"
                   mt={2}
                   mb={5}
                 >
-                  <Text fontSize={15}>New Post description</Text>
+                  <Text fontSize={15}> {postData.description} </Text>
                 </Box>
                 <Grid templateColumns="repeat(12, 1fr)">
                   <GridItem
@@ -82,7 +89,7 @@ const PreviewPost = () => {
                     <Text>Tag</Text>
                   </GridItem>
                   <GridItem colSpan={10}>
-                    <Tag ml={2} colorScheme="teal">
+                    {/* <Tag ml={2} colorScheme="teal">
                       Tag 1
                     </Tag>
                     <Tag ml={2} colorScheme="teal">
@@ -90,9 +97,16 @@ const PreviewPost = () => {
                     </Tag>
                     <Tag ml={2} colorScheme="teal">
                       Tag 3
-                    </Tag>
+                    </Tag> */}
+
+                    {postData.tag.map((item, index) => (
+                      <Tag ml={2} colorScheme="teal" key={`tag-${index}`}>
+                        { item }
+                      </Tag>
+                    ))}
                   </GridItem>
                 </Grid>
+                <Text fontSize={16} marginTop="0.5rem" paddingLeft="0.5rem">Permission : { postData.permission } </Text>
               </Box>
             </GridItem>
             <GridItem
@@ -109,9 +123,17 @@ const PreviewPost = () => {
             <GridItem colSpan={{ base: 12, lg: 6, md: 12, sm: 12 }} mt={5}>
               <Text fontSize={20}>Preview</Text>
               <SimpleGrid columns={3} spacing={4}>
+
+                {/* <Box bg={"gray.300"} h={{ base: 150, lg: 220 }}></Box>
                 <Box bg={"gray.300"} h={{ base: 150, lg: 220 }}></Box>
-                <Box bg={"gray.300"} h={{ base: 150, lg: 220 }}></Box>
-                <Box bg={"gray.300"} h={{ base: 150, lg: 220 }}></Box>
+                <Box bg={"gray.300"} h={{ base: 150, lg: 220 }}></Box> */}
+
+                { postData.image.map((item, index) => (
+                  <Box  key={`image-${index}`} height="13rem"
+                  className={styles.previewImage}>
+                    <img src={URL.createObjectURL(item)} />
+                  </Box>
+                )) }
               </SimpleGrid>
             </GridItem>
             <GridItem
@@ -120,7 +142,8 @@ const PreviewPost = () => {
               mt={5}
             >
               <Flex justify={"center"}>
-                <Button w={"80%"} colorScheme="blue" variant="solid">
+                <Button w={"80%"} colorScheme="blue" variant="solid"
+                  onClick={() => backPage()}>
                   Back
                 </Button>
               </Flex>
