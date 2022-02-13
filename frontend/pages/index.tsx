@@ -7,6 +7,8 @@ import NewestPostList from '../components/home/NewestPostList'
 import RecommendedCarousel from '../components/carousel/RecommendedCarousel'
 
 import styles from '../styles/Home.module.scss'
+import HistoryPostList from '../components/home/HistoryPostList'
+import Fab from '../components/createpost/Fab'
 
 const newestPostData = [
   {
@@ -71,6 +73,29 @@ const newestPostData = [
   },
 ]
 
+
+const historyPostData = [
+  {
+    id: "history1",
+    title : "History Post 1",
+    duration : "1m"
+  },
+  {
+    id: "history2",
+    title : "History Post 2",
+    duration : "2m"
+  },
+  {
+    id: "history3",
+    title : "History Post 3",
+    duration : "3m"
+  },
+  {
+    id: "history4",
+    title : "History Post 4",
+    duration : "4m"
+  }
+]
 const Home: NextPage = () => {
   return (
     <>
@@ -82,12 +107,13 @@ const Home: NextPage = () => {
 
       <Box className={styles.container} >
 
-        <Box  width={{ base: '100%', sm: '90%', md: '80%', lg: '80%' }}>
+        <Box  width={{ base: '100%', sm: '90%', md: '90%', lg: '90%', xl: '75%' }}>
           <RecommendedCarousel data={newestPostData}></RecommendedCarousel>
         </Box>
+
         {/* Bottom Carousel Component */}
         <Grid templateColumns='repeat(12, 1fr)'
-          gap={6} width={{ base: '100%', sm: '90%', md: '80%', lg: '75%' }}
+          gap={6} width={{ base: '100%', sm: '90%', md: '90%', lg: '85%', xl: '70%' }}
         >
 
           {/* Newest Post Grid */}
@@ -100,10 +126,14 @@ const Home: NextPage = () => {
           </GridItem>
 
           {/* History Grid */}
-          <GridItem colSpan={{ base: 12, md: 12, lg: 5 }}></GridItem>
+          <GridItem colSpan={{ base: 12, md: 12, lg: 5 }}>
+            <h1 className={styles.homeHeader}>History Post</h1>
+
+            <HistoryPostList posts={historyPostData}/>
+          </GridItem>
 
         </Grid>
-
+        <Fab></Fab>
       </Box>
     </>
   )

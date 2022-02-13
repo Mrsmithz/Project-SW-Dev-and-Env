@@ -29,32 +29,46 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { MoonIcon, SunIcon, BellIcon } from "@chakra-ui/icons";
+import NextLink from "next/link";
 
-const Links = ["Home", "Forum", "Ranking"];
-
-const NavLink = ({ children }: { children: ReactNode }) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={"md"}
-    _hover={{
-      textDecoration: "none",
-      bg: useColorModeValue("gray.200", "gray.700"),
-    }}
-    href={"#"}
-  >
-    {children}
-  </Link>
+const NavLink = ({ children, page }: { children: ReactNode; page: string }) => (
+  <NextLink href={page} passHref>
+    <Link
+      px={2}
+      py={1}
+      rounded={"md"}
+      _hover={{
+        textDecoration: "none",
+        bg: useColorModeValue("gray.200", "gray.700"),
+      }}
+    >
+      {children}
+    </Link>
+  </NextLink>
 );
 
 export default function Simple() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [openModal, setOpenModal] = useState(false);
+  const {
+    isOpen: openModal,
+    onOpen: onOpenModal,
+    onClose: onCloseModal,
+  } = useDisclosure();
+
+  const backgroundNav = useColorModeValue("gray.100", "gray.900");
+  const iconSwithTheme = useColorModeValue("yellow.300", "orange.500");
+  const notiHover = useColorModeValue("blue.100", "blue.500");
 
   return (
     <>
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4} position="fixed" width={"100%"}>
+      <Box
+        bg={backgroundNav}
+        px={4}
+        position="fixed"
+        width={"100%"}
+        zIndex={100}
+      >
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
             size={"md"}
@@ -72,9 +86,9 @@ export default function Simple() {
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
+              <NavLink page={"/"}>Home</NavLink>
+              <NavLink page={"/forum"}>Forum</NavLink>
+              <NavLink page={"/ranking"}>Ranking</NavLink>
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
@@ -86,7 +100,7 @@ export default function Simple() {
               <Menu>
                 <MenuButton
                   onClick={toggleColorMode}
-                  _hover={{ bg: useColorModeValue("yellow.300", "orange.500") }}
+                  _hover={{ bg: iconSwithTheme }}
                   w={10}
                   borderRadius={100}
                 >
@@ -99,7 +113,7 @@ export default function Simple() {
               </Menu>
               <Menu>
                 <MenuButton
-                  _hover={{ bg: useColorModeValue("blue.100", "blue.500") }}
+                  _hover={{ bg: notiHover }}
                   w={10}
                   borderRadius={100}
                 >
@@ -153,12 +167,13 @@ export default function Simple() {
           </Flex>
         </Flex>
 
+        {/* Mobile */}
         {isOpen ? (
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4} alignItems="center">
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
+              <NavLink page={"/"}>Home</NavLink>
+              <NavLink page={"/forum"}>Forum</NavLink>
+              <NavLink page={"/ranking"}>Ranking</NavLink>
               <Box onClick={toggleColorMode}>
                 {colorMode === "light" ? (
                   <Text>Dark Mode</Text>
@@ -166,30 +181,27 @@ export default function Simple() {
                   <Text>Light Mode</Text>
                 )}
               </Box>
-              <Box onClick={() => setOpenModal(true)}>Notification</Box>
+              <Box onClick={onOpenModal}>Notification</Box>
             </Stack>
           </Box>
         ) : null}
 
-        <Modal isOpen={openModal} onClose={() => setOpenModal(false)} isCentered>
+        {/* Modal Noti */}
+        <Modal isOpen={openModal} onClose={onCloseModal} isCentered>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Modal Title</ModalHeader>
-            <ModalCloseButton onClick={() => setOpenModal(false)} />
+            <ModalCloseButton onClick={onCloseModal} />
             <ModalBody>
-                <Box>Noti 1</Box>
-                <Box>Noti 2</Box>
-                <Box>Noti 3</Box>
-                <Box>Noti 4</Box>
-                <Box>Noti 5</Box>
+              <Box>Noti 1</Box>
+              <Box>Noti 2</Box>
+              <Box>Noti 3</Box>
+              <Box>Noti 4</Box>
+              <Box>Noti 5</Box>
             </ModalBody>
 
             <ModalFooter>
-              <Button
-                colorScheme="blue"
-                mr={3}
-                onClick={() => setOpenModal(false)}
-              >
+              <Button colorScheme="blue" mr={3} onClick={onCloseModal}>
                 Close
               </Button>
             </ModalFooter>
