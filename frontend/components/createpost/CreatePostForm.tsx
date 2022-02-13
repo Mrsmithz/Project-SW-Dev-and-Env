@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Box, Flex, Stack, Text, Grid, GridItem, Input, Textarea, FormControl,
@@ -13,7 +13,8 @@ import {
   ModalCloseButton,
   Button,
   Select,
-  useDisclosure
+  useDisclosure,
+  FormErrorMessage
 } from '@chakra-ui/react'
 
 import { AddIcon, CloseIcon } from '@chakra-ui/icons'
@@ -58,6 +59,15 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
 
   const [images, setImages] = useState<File[]>([]);
 
+  const [isValidatedTitle, setValidatedTitle] = useState<boolean>(false);
+  const [validationMessage, setValidationMessage] = useState<string>();
+
+  const [isValidatedTagInput, setValidatedTagInput] = useState<boolean>(false);
+  const [validationTagMessage, setValidationTagMessage] = useState<string>();
+
+  const [isError, setError] = useState<boolean>(true);
+
+
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
 
     if (!e.target.files || e.target.files.length === 0) {
@@ -77,7 +87,39 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
 
   }
 
+  useEffect(() => {
+    if (title.length < 4 ){
+      setValidatedTitle(false)
+      setValidationMessage("Your title is too short!!")
+    }
+    else if (title.length > 40) {
+      setValidatedTitle(false)
+      setValidationMessage("Your title is too long!!")
+    }
+    else {
+      setValidatedTitle(true)
+    }
+  }, [title])
+
+  useEffect(() => {
+    console.log("change")
+    if (tagInput.length < 2){
+      setValidatedTagInput(false)
+      setValidationTagMessage("Your tag message is too short!!")
+    }
+    else if(tagInput.length > 15) {
+      setValidatedTagInput(false)
+      setValidationTagMessage("Your tag message is too long!!")
+    }
+    else {
+      setValidatedTagInput(true)
+    }
+  }, [tagInput])
+
   const addTag = () => {
+    if (!isValidatedTagInput){
+      return;
+    }
     if (tag.length < 5) {
       var newTag = [...tag];
       newTag.push(tagInput);
@@ -180,6 +222,9 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
             color="black"
             onChange={handleTitleChange}
           />
+          {!isValidatedTitle && (
+            <Text style={{color: "red"}}>{validationMessage}</Text>
+          )}
         </FormControl>
 
         <FormControl marginTop="2rem">
@@ -285,6 +330,9 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
               color="black"
               onChange={handleTagInputChange}
             />
+            {!isValidatedTagInput && (
+              <Text style={{color : "red"}}>{validationTagMessage}</Text>
+            )}
           </ModalBody>
 
           <ModalFooter>
