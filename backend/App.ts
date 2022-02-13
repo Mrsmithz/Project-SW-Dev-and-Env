@@ -2,6 +2,8 @@ import express, {Request, Response, NextFunction, Application} from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import { handlePDFUpload } from './src/controller/FileUploadController'
+import { DocumentProcessor } from './src/controller/OCRController'
 
 dotenv.config()
 
@@ -17,5 +19,7 @@ app.get('/health', (req : Request, res : Response, next : NextFunction) : Respon
         status:'UP'
     })
 })
+
+app.post('/upload', handlePDFUpload, DocumentProcessor)
 
 export { app }
