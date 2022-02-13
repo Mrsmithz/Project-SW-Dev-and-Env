@@ -5,6 +5,7 @@ on:
       - dev
       - develop/deployment
 jobs:
+  # Deployment jobs
   deploy:
     name: deploy
     runs-on: ubuntu-latest
