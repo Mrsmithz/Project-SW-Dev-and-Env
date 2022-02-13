@@ -17,5 +17,7 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            whoami
-            ls -la
+            cd app/Project-SW-Dev-and-Env
+            git pull
+            cd deployment
+            docker-compose up --build
