@@ -11,9 +11,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3000:3000
+    restart: on-failure
   express-app:
     build:
       context: ../backend/
       dockerfile: Dockerfile
     ports:
       - 8000:8000
+    restart: on-failure
