@@ -14,7 +14,7 @@ import { MdDescription, MdEdit, MdVerified } from 'react-icons/md';
 
 import styles from '../../styles/CreatePost.module.scss'
 
-import { CreatedPost } from '../../model/CreatedPost'
+import { CreatedPost } from '../../types/CreatedPost'
 
 const tasks = [
   {

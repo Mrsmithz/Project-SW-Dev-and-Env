@@ -16,13 +16,14 @@ import {
   useDisclosure,
   FormErrorMessage
 } from '@chakra-ui/react'
+import { CreatedPost } from '../../types/CreatedPost'
 
 import { AddIcon, CloseIcon } from '@chakra-ui/icons'
 import { MdImageSearch } from 'react-icons/md';
 
 import styles from '../../styles/CreatePost.module.scss'
 
-import { CreatedPost } from '../../model/CreatedPost'
+import { createPostTitleValidation } from '../../utils/formValidation';
 
 type Props = {
   toNextPage: Function,
@@ -88,18 +89,20 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
   }
 
   useEffect(() => {
-    if (title.length < 4 ){
-      setValidatedTitle(false)
-      setValidationMessage("Your title is too short!!")
-    }
-    else if (title.length > 40) {
-      setValidatedTitle(false)
-      setValidationMessage("Your title is too long!!")
-    }
-    else {
-      setValidatedTitle(true)
-    }
-  }, [title])
+    // if (title.length < 4 ){
+    //   setValidatedTitle(false)
+    //   setValidationMessage("Your title is too short!!")
+    // }
+    // else if (title.length > 40) {
+    //   setValidatedTitle(false)
+    //   setValidationMessage("Your title is too long!!")
+    // }
+    // else {
+    //   setValidatedTitle(true)
+    // }
+    setValidationMessage(createPostTitleValidation(title))
+    console.log(createPostTitleValidation(title))
+  }, [title, createPostTitleValidation])
 
   useEffect(() => {
     console.log("change")
