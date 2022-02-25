@@ -1,4 +1,4 @@
-export const createPostTitleValidation = (title: string) => {
+export const validationTitleMessage = (title: string) => {
     if (title.length < 4) {
         return "Your title is too short!!";
     }
@@ -7,5 +7,17 @@ export const createPostTitleValidation = (title: string) => {
     }
     else {
         return "";
+    }
+}
+
+export const validationTitle = (title: string) => {
+    if (title.length < 4) {
+        return false;
+    }
+    else if (title.length > 40) {
+        return false;
+    }
+    else {
+        return true;
     }
 }

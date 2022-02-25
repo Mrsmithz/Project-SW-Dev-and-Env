@@ -23,7 +23,7 @@ import { MdImageSearch } from 'react-icons/md';
 
 import styles from '../../styles/CreatePost.module.scss'
 
-import { createPostTitleValidation } from '../../utils/formValidation';
+import { validationTitleMessage, validationTitle } from '../../utils/formValidation';
 
 type Props = {
   toNextPage: Function,
@@ -89,20 +89,9 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
   }
 
   useEffect(() => {
-    // if (title.length < 4 ){
-    //   setValidatedTitle(false)
-    //   setValidationMessage("Your title is too short!!")
-    // }
-    // else if (title.length > 40) {
-    //   setValidatedTitle(false)
-    //   setValidationMessage("Your title is too long!!")
-    // }
-    // else {
-    //   setValidatedTitle(true)
-    // }
-    setValidationMessage(createPostTitleValidation(title))
-    console.log(createPostTitleValidation(title))
-  }, [title, createPostTitleValidation])
+    setValidatedTitle(validationTitle(title))
+    setValidationMessage(validationTitleMessage(title))
+  }, [title, validationTitleMessage])
 
   useEffect(() => {
     console.log("change")
