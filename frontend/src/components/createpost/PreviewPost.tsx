@@ -17,7 +17,7 @@ import Link from "next/link";
 
 import styles from '../../styles/CreatePost.module.scss'
 
-import { CreatedPost } from '../../model/CreatedPost'
+import { CreatedPost } from '../../types/CreatedPost'
 
 type Props = {
   postData: CreatedPost,
