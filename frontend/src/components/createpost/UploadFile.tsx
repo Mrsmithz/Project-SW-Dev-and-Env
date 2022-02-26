@@ -3,17 +3,25 @@ import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Box, Text, Center, useColorModeValue, Image, Stack, HStack, useToast, Button, Tag, TagLabel } from "@chakra-ui/react";
 
+import {
+  checkIsPDFFile,
+  checkIsSingleFile
+} from '../../utils/formValidation';
+
 type Props = {
 };
 
 const size = { base: '80%', md: '70%', lg: '60%' }
 // const containerWidth = { base: '100%', sm: '90%', md: '90%', lg: '85%', xl: '70%' };
+
 const UploadFile: NextPage<{ toNextPage: Function, file: File | null, setFile: Function }> = ({ toNextPage, file, setFile }) => {
+  
   const toast = useToast()
+
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     onDrop: (files: any) => {
-      if (files.length === 1) {
-        if (files[0].type === 'application/pdf') {
+      if (checkIsSingleFile(files.length)) {
+        if (checkIsPDFFile(files[0].type)) {
           setFile(files[0])
           toast({
             title: `Upload file success.`,

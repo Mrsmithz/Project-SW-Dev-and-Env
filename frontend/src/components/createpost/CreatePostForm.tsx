@@ -23,7 +23,13 @@ import { MdImageSearch } from 'react-icons/md';
 
 import styles from '../../styles/CreatePost.module.scss'
 
-import { validationTitleMessage, validationTitle } from '../../utils/formValidation';
+import {
+  getTitleValidateAlertMessage,
+  validateTitle,
+  checkImageFile,
+  getTagValidateAlertMessage,
+  validateTag,
+} from '../../utils/formValidation';
 
 type Props = {
   toNextPage: Function,
@@ -75,7 +81,7 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
       return
     }
 
-    if (e.target.files[0].type == 'image/png' || e.target.files[0].type == 'image/jpeg') {
+    if (checkImageFile(e.target.files[0].type)) {
       if (images.length < 3) {
         var newImage = [...images];
         newImage.push(e.target.files[0]);
@@ -89,27 +95,17 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
   }
 
   useEffect(() => {
-    setValidatedTitle(validationTitle(title))
-    setValidationMessage(validationTitleMessage(title))
-  }, [title, validationTitleMessage])
+    setValidatedTitle(validateTitle(title))
+    setValidationMessage(getTitleValidateAlertMessage(title))
+  }, [title])
 
   useEffect(() => {
-    console.log("change")
-    if (tagInput.length < 2){
-      setValidatedTagInput(false)
-      setValidationTagMessage("Your tag message is too short!!")
-    }
-    else if(tagInput.length > 15) {
-      setValidatedTagInput(false)
-      setValidationTagMessage("Your tag message is too long!!")
-    }
-    else {
-      setValidatedTagInput(true)
-    }
+    setValidatedTagInput(validateTag(tagInput))
+    setValidationTagMessage(getTagValidateAlertMessage(tagInput))
   }, [tagInput])
 
   const addTag = () => {
-    if (!isValidatedTagInput){
+    if (!isValidatedTagInput) {
       return;
     }
     if (tag.length < 5) {
@@ -215,7 +211,7 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
             onChange={handleTitleChange}
           />
           {!isValidatedTitle && (
-            <Text style={{color: "red"}}>{validationMessage}</Text>
+            <Text style={{ color: "red" }}>{validationMessage}</Text>
           )}
         </FormControl>
 
@@ -323,7 +319,7 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
               onChange={handleTagInputChange}
             />
             {!isValidatedTagInput && (
-              <Text style={{color : "red"}}>{validationTagMessage}</Text>
+              <Text style={{ color: "red" }}>{validationTagMessage}</Text>
             )}
           </ModalBody>
 
