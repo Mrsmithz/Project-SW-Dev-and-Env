@@ -37,7 +37,9 @@ describe("Create Post Page", () => {
   it("render create post form", () => {
     render(<CreatePostForm toNextPage={() => {}} backPage={() => {}} />);
   });
-  it("render preview post", () => {});
+  it("render preview post", () => {
+    //
+  });
 
   it("render task progress state 1", () => {
     render(<TaskProgress tasks={tasks} state={1} />);
