@@ -6,7 +6,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "unit-test": "jest -i ./src/test/utils/formValidation.test.ts"
+    "unit-test": "jest -i ./src/test/utils/formValidation.test.ts",
+    "e2e-test": "jest -i ./src/test/utils/e2e.test.ts"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.1.5",
@@ -14,11 +15,15 @@
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@fontsource/prompt": "^4.5.1",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.3",
     "@types/jquery": "^3.5.13",
+    "@types/puppeteer": "^5.4.5",
     "axios": "^0.25.0",
     "framer-motion": "^5",
     "jquery": "^3.6.0",
     "next": "12.0.10",
+    "puppeteer": "^13.4.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-dropzone": "^12.0.2",

@@ -57,7 +57,10 @@ const PreviewPost = ({ postData, backPage }: Props) => {
               </Center>
               <Center>
                 <Text fontSize={{ base: 20, lg: 20, md: 40, sm: 40 }}>
-                  {postData.contact}
+                  <div id="contact">
+                    {postData.contact}
+                  </div>
+                  
                 </Text>
               </Center>
             </GridItem>
@@ -69,7 +72,7 @@ const PreviewPost = ({ postData, backPage }: Props) => {
                 bg={useColorModeValue("gray.100", "gray.600")}
                 borderRadius={20}
               >
-                <Text fontSize={20}>Title : { postData.title } </Text>
+                <Text fontSize={20}>Title : <div id="title">{ postData.title }</div> </Text>
                 <Text fontSize={20}>Description</Text>
                 <Box
                   bg={useColorModeValue("blue.200", "gray.700")}
@@ -79,7 +82,7 @@ const PreviewPost = ({ postData, backPage }: Props) => {
                   mt={2}
                   mb={5}
                 >
-                  <Text fontSize={15}> {postData.description} </Text>
+                  <Text fontSize={15}> <div id="description">{postData.description}</div> </Text>
                 </Box>
                 <Grid templateColumns="repeat(12, 1fr)">
                   <GridItem
@@ -150,7 +153,7 @@ const PreviewPost = ({ postData, backPage }: Props) => {
               <Flex justify={"center"}>
                 <Link href={"/"} passHref>
                   <Button w={"80%"} colorScheme="blue" variant="solid" mt={5}>
-                    Finish
+                    <div id="finish-btn">Finish</div>
                   </Button>
                 </Link>
               </Flex>
