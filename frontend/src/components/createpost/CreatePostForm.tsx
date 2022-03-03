@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Box, Flex, Stack, Text, Grid, GridItem, Input, Textarea, FormControl,
@@ -13,15 +13,27 @@ import {
   ModalCloseButton,
   Button,
   Select,
-  useDisclosure
+  useDisclosure,
+  FormErrorMessage
 } from '@chakra-ui/react'
+import { CreatedPost } from '../../types/CreatedPost'
 
 import { AddIcon, CloseIcon } from '@chakra-ui/icons'
 import { MdImageSearch } from 'react-icons/md';
 
 import styles from '../../styles/CreatePost.module.scss'
 
+import {
+  getTitleValidateAlertMessage,
+  validateTitle,
+  checkImageFile,
+  getTagValidateAlertMessage,
+  validateTag,
+} from '../../utils/formValidation';
+
 type Props = {
+  toNextPage: Function,
+  backPage: Function
 }
 
 const containerWidth = { base: '100%', sm: '90%', md: '90%', lg: '85%', xl: '70%' };
@@ -30,7 +42,7 @@ const permissionWidth = { base: "100%", md: "50%", lg: "30%" };
 const dropzoneWidth = { base: "9rem", md: "8rem", lg: "9rem", xl: '9rem' };
 const dropzoneHeight = { base: "13rem", md: "12rem", lg: "13rem", xl: '13rem' };
 
-const CreatePostForm = () => {
+const CreatePostForm = ({ toNextPage, backPage }: Props) => {
 
   const inputRef = React.createRef<HTMLInputElement>();
 
@@ -45,7 +57,7 @@ const CreatePostForm = () => {
   const [contact, setContact] = useState('');
   const handleContactChange = (e: React.ChangeEvent<HTMLInputElement>) => setContact(e.target.value);
 
-  const [tag, setTag] = useState(["Tag1"]);
+  const [tag, setTag] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
   const handleTagInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setTagInput(e.target.value);
 
@@ -54,13 +66,22 @@ const CreatePostForm = () => {
 
   const [images, setImages] = useState<File[]>([]);
 
+  const [isValidatedTitle, setValidatedTitle] = useState<boolean>(false);
+  const [validationMessage, setValidationMessage] = useState<string>();
+
+  const [isValidatedTagInput, setValidatedTagInput] = useState<boolean>(false);
+  const [validationTagMessage, setValidationTagMessage] = useState<string>();
+
+  const [isError, setError] = useState<boolean>(true);
+
+
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
 
     if (!e.target.files || e.target.files.length === 0) {
       return
     }
 
-    if (e.target.files[0].type == 'image/png' || e.target.files[0].type == 'image/jpeg') {
+    if (checkImageFile(e.target.files[0].type)) {
       if (images.length < 3) {
         var newImage = [...images];
         newImage.push(e.target.files[0]);
@@ -73,7 +94,20 @@ const CreatePostForm = () => {
 
   }
 
+  useEffect(() => {
+    setValidatedTitle(validateTitle(title))
+    setValidationMessage(getTitleValidateAlertMessage(title))
+  }, [title])
+
+  useEffect(() => {
+    setValidatedTagInput(validateTag(tagInput))
+    setValidationTagMessage(getTagValidateAlertMessage(tagInput))
+  }, [tagInput])
+
   const addTag = () => {
+    if (!isValidatedTagInput) {
+      return;
+    }
     if (tag.length < 5) {
       var newTag = [...tag];
       newTag.push(tagInput);
@@ -128,7 +162,7 @@ const CreatePostForm = () => {
               <Text>Drop Image Here</Text>
             </Stack>
           </Box>
-          
+
         )
       }
     }
@@ -140,6 +174,21 @@ const CreatePostForm = () => {
   const imageInputHandler = () => {
     if (inputRef.current)
       inputRef.current.click()
+  }
+
+  const nextButtonHandler = () => {
+
+    const createdPost: CreatedPost = {
+      title: title,
+      description: description,
+      contact: contact,
+      tag: tag,
+      permission: permission,
+      image: images
+    }
+
+    toNextPage(createdPost);
+
   }
 
   return (
@@ -161,6 +210,9 @@ const CreatePostForm = () => {
             color="black"
             onChange={handleTitleChange}
           />
+          {!isValidatedTitle && (
+            <Text style={{ color: "red" }}>{validationMessage}</Text>
+          )}
         </FormControl>
 
         <FormControl marginTop="2rem">
@@ -197,7 +249,7 @@ const CreatePostForm = () => {
             {tag.map((item: string, index: number) => (
               <Flex justify="center" align="center" key={`newest-tag-${index}`}
                 className={styles.tagBox}
-                color={useColorModeValue('#000000', '#000000')}
+                color={'black'}
                 cursor="pointer"
                 onClick={(e) => deleteTag(e)}>
                 <span>{item}</span>
@@ -242,8 +294,10 @@ const CreatePostForm = () => {
         <Stack w="100%" marginTop="2.5rem">
           <Button colorScheme="teal" width="12rem" size="lg">Auto Fill By OCR</Button>
           <Stack w="100%" marginTop="0.5rem" direction="row">
-            <Button colorScheme="teal" width="8rem" size="lg">Back</Button>
-            <Button colorScheme="teal" width="8rem" size="lg">Next</Button>
+            <Button colorScheme="teal" width="8rem" size="lg"
+              onClick={() => backPage()}>Back</Button>
+            <Button colorScheme="teal" width="8rem" size="lg"
+              onClick={() => nextButtonHandler()}>Next</Button>
           </Stack>
         </Stack>
 
@@ -264,6 +318,9 @@ const CreatePostForm = () => {
               color="black"
               onChange={handleTagInputChange}
             />
+            {!isValidatedTagInput && (
+              <Text style={{ color: "red" }}>{validationTagMessage}</Text>
+            )}
           </ModalBody>
 
           <ModalFooter>

@@ -14,6 +14,8 @@ import { MdDescription, MdEdit, MdVerified } from 'react-icons/md';
 
 import styles from '../../styles/CreatePost.module.scss'
 
+import { CreatedPost } from '../../types/CreatedPost'
+
 const tasks = [
   {
     taskName: "Upload File",
@@ -32,18 +34,43 @@ const tasks = [
 const CreatePost: NextPage = () => {
 
   const [taskState, setTaskState] = useState(1);
-  
+  const [postData, setPostData] = useState<CreatedPost>({
+    title: "",
+    description: "",
+    contact: "",
+    tag: [],
+    permission: "",
+    image: []
+  });
+  const [file, setFile] = useState<File | null>(null)
+
   const renderComponent = () => {
     if (taskState == 1) {
-      return (<UploadFile />);
+      return (<UploadFile toNextPage={()=>goToPreviewPage()} file={file} setFile={(file:File | null)=>setFile(file)}/>);
     }
     else if (taskState == 2) {
-      return (<CreatePostForm />);
+      return (<CreatePostForm toNextPage={(data: CreatedPost) => getDataFromForm(data)}
+        backPage={() => backButtonHandler()} />);
     }
     else if (taskState == 3) {
-      return (<PreviewPost />);
+      return (<PreviewPost postData={postData} backPage={() => backButtonHandler()} />);
     }
   };
+
+  const goToPreviewPage = () =>{
+    setTaskState(2);
+  }
+  const getDataFromForm = (data: CreatedPost) => {
+    console.log(data);
+    setPostData(data);
+    setTaskState(3);
+  }
+
+  const backButtonHandler = () => {
+    if (taskState > 1) {
+      setTaskState(taskState - 1);
+    }
+  }
 
   return (
     <>
@@ -74,4 +101,4 @@ const CreatePost: NextPage = () => {
   );
 };
 
-export default CreatePost;
+export default CreatePost

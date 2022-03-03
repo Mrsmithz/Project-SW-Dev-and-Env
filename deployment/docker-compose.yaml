@@ -1,0 +1,19 @@
+services:
+  nginx:
+    image: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/conf:/etc/nginx
+  next-app:
+    build:
+      context: ../frontend/
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+  express-app:
+    build:
+      context: ../backend/
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
