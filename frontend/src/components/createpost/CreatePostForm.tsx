@@ -14,7 +14,8 @@ import {
   Button,
   Select,
   useDisclosure,
-  FormErrorMessage
+  FormErrorMessage,
+  useToast
 } from '@chakra-ui/react'
 import { CreatedPost } from '../../types/CreatedPost'
 
@@ -74,6 +75,7 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
 
   const [isError, setError] = useState<boolean>(true);
 
+  const toast = useToast()
 
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -86,7 +88,21 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
         var newImage = [...images];
         newImage.push(e.target.files[0]);
         setImages(newImage);
+        toast({
+          title: `Upload success.`,
+          status: 'success',
+          duration: 4000,
+          isClosable: true,
+        })
       }
+    }else{
+      toast({
+        title: `Upload error`,
+        description: 'Please upload .png or .jpg file.',
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+      })
     }
 
     const element = e.target as HTMLInputElement;
@@ -331,7 +347,7 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
               onClick={() => addTag()}
             >
               Add
-              </Button>
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
