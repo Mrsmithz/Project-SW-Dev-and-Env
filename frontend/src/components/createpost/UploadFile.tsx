@@ -67,7 +67,7 @@ const UploadFile: NextPage<{ toNextPage: Function, file: File | null, setFile: F
           alignSelf="center"
         >
 
-          <input {...getInputProps()} />
+          <input id="file-upload" type="file" {...getInputProps()} />
           <Box>
             <Center mb={5}>
               <Image
@@ -79,21 +79,24 @@ const UploadFile: NextPage<{ toNextPage: Function, file: File | null, setFile: F
             <Text>Drag and drop some files here, or click to select files.</Text>
           </Box>
         </Center>
+        <Box id="file-name">
         {file &&
           <Box alignItems={'flex-end'}>
             <HStack spacing={4} mt={2}>
               <Tooltip label='Click to delete file.'>
                 <Tag size={'lg'} bg='#726A95' color={'snow'} onClick={() => setFile(null)}>
-                  <TagLabel cursor='pointer'>{file.name}</TagLabel>
+                  <TagLabel><div id="file-name-tag">{file.name}</div></TagLabel>
                 </Tag>
               </Tooltip>
             </HStack>
             <HStack justify='flex-end'>
-              <Button colorScheme="teal" width="12rem" size="lg" mt={10} textAlign={'right'} onClick={() => toNextPage()}>Next</Button>
+              <Button colorScheme="teal" width="12rem" size="lg" mt={10} textAlign={'right'} onClick={() => toNextPage()}><div id="next-btn">Next</div></Button>
             </HStack>
 
           </Box>
         }
+        </Box>
+        
 
 
       </Stack>

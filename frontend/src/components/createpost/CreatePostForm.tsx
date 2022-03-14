@@ -313,7 +313,7 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
             <Button colorScheme="teal" width="8rem" size="lg"
               onClick={() => backPage()}>Back</Button>
             <Button colorScheme="teal" width="8rem" size="lg"
-              onClick={() => nextButtonHandler()}>Next</Button>
+              onClick={() => nextButtonHandler()}><div id="next-btn-2">Next</div></Button>
           </Stack>
         </Stack>
 
