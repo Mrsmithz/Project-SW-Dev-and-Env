@@ -17,6 +17,7 @@ const Fab = () => {
       >
         <Link href="/createpost" passHref>
           <IconButton
+            id="create-btn"
             borderRadius={200}
             colorScheme="blue"
             aria-label="Call Segun"

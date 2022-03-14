@@ -14,15 +14,23 @@ import {
   Button,
   Select,
   useDisclosure,
-  FormErrorMessage
+  FormErrorMessage,
+  useToast
 } from '@chakra-ui/react'
+import { CreatedPost } from '../../types/CreatedPost'
 
 import { AddIcon, CloseIcon } from '@chakra-ui/icons'
 import { MdImageSearch } from 'react-icons/md';
 
 import styles from '../../styles/CreatePost.module.scss'
 
-import { CreatedPost } from '../../model/CreatedPost'
+import {
+  getTitleValidateAlertMessage,
+  validateTitle,
+  checkImageFile,
+  getTagValidateAlertMessage,
+  validateTag,
+} from '../../utils/formValidation';
 
 type Props = {
   toNextPage: Function,
@@ -67,6 +75,7 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
 
   const [isError, setError] = useState<boolean>(true);
 
+  const toast = useToast()
 
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -74,12 +83,26 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
       return
     }
 
-    if (e.target.files[0].type == 'image/png' || e.target.files[0].type == 'image/jpeg') {
+    if (checkImageFile(e.target.files[0].type)) {
       if (images.length < 3) {
         var newImage = [...images];
         newImage.push(e.target.files[0]);
         setImages(newImage);
+        toast({
+          title: `Upload success.`,
+          status: 'success',
+          duration: 4000,
+          isClosable: true,
+        })
       }
+    }else{
+      toast({
+        title: `Upload error`,
+        description: 'Please upload .png or .jpg file.',
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+      })
     }
 
     const element = e.target as HTMLInputElement;
@@ -88,36 +111,17 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
   }
 
   useEffect(() => {
-    if (title.length < 4 ){
-      setValidatedTitle(false)
-      setValidationMessage("Your title is too short!!")
-    }
-    else if (title.length > 40) {
-      setValidatedTitle(false)
-      setValidationMessage("Your title is too long!!")
-    }
-    else {
-      setValidatedTitle(true)
-    }
+    setValidatedTitle(validateTitle(title))
+    setValidationMessage(getTitleValidateAlertMessage(title))
   }, [title])
 
   useEffect(() => {
-    console.log("change")
-    if (tagInput.length < 2){
-      setValidatedTagInput(false)
-      setValidationTagMessage("Your tag message is too short!!")
-    }
-    else if(tagInput.length > 15) {
-      setValidatedTagInput(false)
-      setValidationTagMessage("Your tag message is too long!!")
-    }
-    else {
-      setValidatedTagInput(true)
-    }
+    setValidatedTagInput(validateTag(tagInput))
+    setValidationTagMessage(getTagValidateAlertMessage(tagInput))
   }, [tagInput])
 
   const addTag = () => {
-    if (!isValidatedTagInput){
+    if (!isValidatedTagInput) {
       return;
     }
     if (tag.length < 5) {
@@ -223,7 +227,7 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
             onChange={handleTitleChange}
           />
           {!isValidatedTitle && (
-            <Text style={{color: "red"}}>{validationMessage}</Text>
+            <Text style={{ color: "red" }}>{validationMessage}</Text>
           )}
         </FormControl>
 
@@ -309,7 +313,7 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
             <Button colorScheme="teal" width="8rem" size="lg"
               onClick={() => backPage()}>Back</Button>
             <Button colorScheme="teal" width="8rem" size="lg"
-              onClick={() => nextButtonHandler()}>Next</Button>
+              onClick={() => nextButtonHandler()}><div id="next-btn-2">Next</div></Button>
           </Stack>
         </Stack>
 
@@ -331,7 +335,7 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
               onChange={handleTagInputChange}
             />
             {!isValidatedTagInput && (
-              <Text style={{color : "red"}}>{validationTagMessage}</Text>
+              <Text style={{ color: "red" }}>{validationTagMessage}</Text>
             )}
           </ModalBody>
 
@@ -343,7 +347,7 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
               onClick={() => addTag()}
             >
               Add
-              </Button>
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

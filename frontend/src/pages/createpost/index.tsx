@@ -14,7 +14,7 @@ import { MdDescription, MdEdit, MdVerified } from 'react-icons/md';
 
 import styles from '../../styles/CreatePost.module.scss'
 
-import { CreatedPost } from '../../model/CreatedPost'
+import { CreatedPost } from '../../types/CreatedPost'
 
 const tasks = [
   {
@@ -84,7 +84,10 @@ const CreatePost: NextPage = () => {
         <Flex className={styles.createPostHeaderBox}>
           <Stack className={styles.createPostHeaderText}>
             <Text color={useColorModeValue("white", "white")} fontSize="2rem">
-              Create Post
+              <div id="create-post-title">
+                Create Post
+              </div>
+              
             </Text>
             <Text color={useColorModeValue("white", "white")} fontSize="1.3rem">
               สร้างโพสต์ใหม่

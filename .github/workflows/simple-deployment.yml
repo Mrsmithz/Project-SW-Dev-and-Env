@@ -2,8 +2,7 @@ name: simple-development-deployment
 on:
   push:
     branches:
-      - dev
-      - develop/deployment
+      - main
 jobs:
   # Deployment jobs
   deploy:
