@@ -13,7 +13,7 @@ const DocumentProcessor : any = async (req : Request, res : Response, next : Nex
         const client : v1.DocumentProcessorServiceClient = new v1.DocumentProcessorServiceClient()
         const name = `projects/${projectId}/locations/${location}/processors/${processorId}`
 
-        const imageFile = await fsPromises.readFile(req.file.filepath)
+        const imageFile = await fsPromises.readFile('test')
         const encodedImage = Buffer.from(imageFile).toString('base64')
 
         const request = {
