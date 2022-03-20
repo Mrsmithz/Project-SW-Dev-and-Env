@@ -1,11 +1,12 @@
 import { NextFunction, Router, Request, Response, } from "express"
 import { graphqlHTTP } from "express-graphql"
 import PostSchema from '../model/Post'
-import Upload from '../utils/GridFsStorage'
+import { upload } from '../utils/GridFsStorage'
 import { MulterError } from "multer"
 import { createPost } from '../controller/PostController'
+
 const router : Router = Router()
-const filesUpload = Upload.fields([
+const filesUpload = upload.fields([
     {
         name:'file',
         maxCount:1

@@ -1,10 +1,11 @@
-import multer from 'multer'
-import { GridFsStorage } from 'multer-gridfs-storage'
+import multer, { StorageEngine } from 'multer'
+// import { GridFsStorage} from 'multer-gridfs-storage'
 import dotenv from 'dotenv'
 import crypto from 'crypto'
 import path from 'path'
 import {Request, Response} from 'express'
-
+import { GridFsStorage } from 'multer-gridfs-storage/lib/gridfs'
+import mongoose from 'mongoose'
 dotenv.config()
 
 interface File {
@@ -15,7 +16,7 @@ interface File {
 }
 
 const storage = new GridFsStorage({
-    url:process.env.MONGODB_URI,
+    db:mongoose.connection,
     file:(req : Request, file : File) => {
         return new Promise((resolve, reject) => {
             crypto.randomBytes(16, (err, buff) => {
@@ -33,4 +34,5 @@ const storage = new GridFsStorage({
     }
 })
 const upload = multer({ storage })
-export default upload
+
+export { upload }
