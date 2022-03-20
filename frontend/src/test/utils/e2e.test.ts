@@ -8,17 +8,17 @@ describe("End to end testing with jest and puppeteer", () => {
 
 
   beforeAll(async () => {
-    browser = await puppeteer.launch({headless: false, args: ['--start-maximized']});
+    browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
     page = await browser.newPage();
     await page.setViewport({width: 1366, height: 768});
   });
 
   it("routing to create post page", async () => {
-    await page.goto("http://localhost:3000");
+    await page.goto("http://188.166.185.128");
     await page.click('[id="create-btn"]');
     await page.waitForSelector("#create-post-title")
     const path = await page.url()
-    expect(path).toContain("http://localhost:3000/createpost")
+    expect(path).toContain("http://188.166.185.128/createpost")
     
   });
 
@@ -60,7 +60,7 @@ describe("End to end testing with jest and puppeteer", () => {
     await page.waitForTimeout(500)
     const path = await page.url()
 
-    expect(path).toBe("http://localhost:3000/")
+    expect(path).toBe("http://188.166.185.128/")
   })
 
   afterAll(() => {
