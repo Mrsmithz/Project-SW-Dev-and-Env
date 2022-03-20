@@ -5,6 +5,8 @@ import { Post } from '../model/Post'
 import { IPost } from '../types/post/Post.type'
 import { GridFile } from 'multer-gridfs-storage'
 import mongoose from 'mongoose'
+import joi from 'joi'
+
 const createPost = async (req : Request, res : Response, next : NextFunction) : Promise<Response> => {
     const uploads = req.files as UploadFiles
     const {title, description, contact, status} = req.body as ICreatePost

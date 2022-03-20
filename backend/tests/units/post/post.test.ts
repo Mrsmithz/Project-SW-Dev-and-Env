@@ -5,21 +5,21 @@ import { connectDB, disconnectDB, clearDB} from '../../../src/utils/db'
 import { Status } from '../../../src/types/post/Status.enum'
 import { ICreatePost } from '../../../src/types/rest/post/CreatePost.type'
 import { MongoMemoryServer } from 'mongodb-memory-server'
-
 const isArrayOfString = (arr : []) => {
     return arr.every(el => typeof el === 'string')
 }
+let mongo : MongoMemoryServer = null
 
 describe('Post API Endpoints', () => {
 
-
     beforeAll(async () : Promise<void> => {
-        const mongo = await MongoMemoryServer.create()
+        mongo = await MongoMemoryServer.create()
         const uri = mongo.getUri()
         await connectDB(uri)
     })
     afterAll(async () : Promise<void> => {
         await disconnectDB()
+        await mongo.stop()
     })
     afterEach(async () : Promise<void> => {
         await clearDB()
