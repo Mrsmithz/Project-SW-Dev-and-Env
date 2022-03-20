@@ -2,7 +2,6 @@ import { Schema, model } from 'mongoose'
 import timestamp from 'mongoose-timestamp'
 import { composeMongoose } from 'graphql-compose-mongoose'
 import { schemaComposer } from 'graphql-compose'
-import { GraphQLUpload } from "graphql-upload"
 
 const PostSchema : Schema = new Schema({
     title:String,
@@ -42,6 +41,12 @@ const PostSchema : Schema = new Schema({
         type:Schema.Types.ObjectId,
         ref:'File'
     },
+    images:[
+        {
+            type:Schema.Types.ObjectId,
+            ref:'File'
+        }
+    ],
     comments:[
         {
             type:Schema.Types.ObjectId,
@@ -53,6 +58,8 @@ PostSchema.plugin(timestamp)
 const Post = model('Post', PostSchema)
 const customizationOptions = {}
 const PostTC = composeMongoose(Post, customizationOptions)
+
+export { Post }
 
 schemaComposer.Query.addFields({
     postById: PostTC.mongooseResolvers.findById(),

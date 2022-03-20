@@ -2,15 +2,10 @@ import express, {Request, Response, NextFunction, Application} from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import { handlePDFUpload } from './src/controller/FileUploadController'
-import { DocumentProcessor } from './src/controller/OCRController'
 import PostRouter from './src/router/post.router'
-import MongoDB from './src/utils/db'
 
-MongoDB.then(db => console.log('Connected to Mongodb'))
 
 const ContextPath : String = '/api/v1';
-
 dotenv.config()
 const app : Application = express()
 
@@ -33,6 +28,6 @@ app.get(`${ContextPath}/health`, (req : Request, res : Response, next : NextFunc
     })
 })
 
-app.post(`${ContextPath}/upload`, handlePDFUpload, DocumentProcessor)
+// app.post(`${ContextPath}/upload`, handlePDFUpload, DocumentProcessor)
 
 export { app }
