@@ -1,7 +1,5 @@
 /node_modules
 /coverage
 *.env
-*.pdf
 *.json
-*.png
 .devcontainer
