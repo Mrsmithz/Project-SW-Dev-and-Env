@@ -1,0 +1,75 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Pull code from branch main') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Mrsmithz/Project-SW-Dev-and-Env.git'
+            }
+        }
+        stage('Download dependency') {
+            steps {
+                dir('frontend') {
+                    sh 'yarn install'
+                }
+            }
+        }
+        stage('Run unit test') {
+            steps {
+                dir('frontend') {
+                    sh 'yarn unit-test'
+                }
+            }
+        }
+        stage('Create unit test report') {
+            steps {
+                dir('frontend') {
+                    script {
+                        if (!fileExists('reports')) {
+                            sh 'mkdir reports'
+                        }
+                    }
+                    sh 'yarn run unit-test 2> reports/unit.txt'
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports', reportFiles: 'unit.txt', reportName: 'Unit Test Report', reportTitles: 'Unit Test Report'])
+                }
+            }
+        }
+        stage('Run component test') {
+            steps {
+                dir('frontend') {
+                    sh 'yarn component-test'
+                }
+            }
+        }
+        stage('Create component test report') {
+            steps {
+                dir('frontend') {
+                    sh 'yarn run component-test 2> reports/component.txt'
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports', reportFiles: 'component.txt', reportName: 'Component Test Report', reportTitles: 'Component Test Report'])
+                }
+            }
+        }
+        stage('Run E2E test') {
+            steps {
+                dir('frontend') {
+                    sh 'yarn run e2e-test'
+                }
+            }
+        }
+        stage('Create E2E test report') {
+            steps {
+                dir('frontend') {
+                    sh 'yarn run e2e-test 2> reports/e2e.txt'
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports', reportFiles: 'e2e.txt', reportName: 'E2E Test Report', reportTitles: 'E2E Test Report'])
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                dir('frontend') {
+                    sh 'yarn build'
+                }
+            }
+        }
+    }
+}
