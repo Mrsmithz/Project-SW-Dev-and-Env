@@ -34,6 +34,21 @@ pipeline {
                 }
             }
         }
+        stage('Run unit test coverage') {
+            steps {
+                dir('frontend') {
+                    sh 'yarn unit-test-coverage'
+                }
+            }
+        }
+        stage('Create unit test coverage report') {
+            steps {
+                dir('frontend') {
+                    sh 'yarn run unit-test-coverage 2> reports/unit-coverage.txt'
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports', reportFiles: 'unit-coverage.txt', reportName: 'Unit Test Coverage Report', reportTitles: 'Unit Test Coverage Report'])
+                }
+            }
+        }
         stage('Run component test') {
             steps {
                 dir('frontend') {
@@ -46,6 +61,21 @@ pipeline {
                 dir('frontend') {
                     sh 'yarn run component-test 2> reports/component.txt'
                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports', reportFiles: 'component.txt', reportName: 'Component Test Report', reportTitles: 'Component Test Report'])
+                }
+            }
+        }
+        stage('Run component test coverage') {
+            steps {
+                dir('frontend') {
+                    sh 'yarn component-test-coverage'
+                }
+            }
+        }
+        stage('Create component test coverage report') {
+            steps {
+                dir('frontend') {
+                    sh 'yarn run component-test-coverage 2> reports/component-coverage.txt'
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports', reportFiles: 'component-coverage.txt', reportName: 'Component Test Coverage Report', reportTitles: 'Component Test Coverage Report'])
                 }
             }
         }
