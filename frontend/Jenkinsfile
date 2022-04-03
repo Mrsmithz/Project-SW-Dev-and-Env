@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Pull code from branch main') {
             steps {
-                git branch: 'dev', url: 'https://github.com/Mrsmithz/Project-SW-Dev-and-Env.git'
+                git branch: 'main', url: 'https://github.com/Mrsmithz/Project-SW-Dev-and-Env.git'
             }
         }
         stage('Download dependency') {
