@@ -39,5 +39,12 @@ pipeline {
                 }
             }
         }
+        stage('Create unit test coverage report') {
+            steps {
+                dir('backend') {
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'Unit Test Coverage Report', reportTitles: 'Unit Test Coverage Report'])
+                }
+            }
+        }
     }
 }

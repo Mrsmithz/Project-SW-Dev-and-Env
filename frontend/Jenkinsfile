@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Pull code from branch main') {
             steps {
-                git branch: 'main', url: 'https://github.com/Mrsmithz/Project-SW-Dev-and-Env.git'
+                git branch: 'dev', url: 'https://github.com/Mrsmithz/Project-SW-Dev-and-Env.git'
             }
         }
         stage('Download dependency') {
@@ -44,22 +44,21 @@ pipeline {
         stage('Create unit test coverage report') {
             steps {
                 dir('frontend') {
-                    sh 'yarn run unit-test-coverage 2> reports/unit-coverage.txt'
-                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports', reportFiles: 'unit-coverage.txt', reportName: 'Unit Test Coverage Report', reportTitles: 'Unit Test Coverage Report'])
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'Unit Test Coverage Report', reportTitles: 'Unit Test Coverage Report'])
                 }
             }
         }
         stage('Run component test') {
             steps {
                 dir('frontend') {
-                    sh 'yarn run component-test'
+                    sh 'yarn run component-test -u'
                 }
             }
         }
         stage('Create component test report') {
             steps {
                 dir('frontend') {
-                    sh 'yarn run component-test 2> reports/component.txt'
+                    sh 'yarn run component-test -u 2> reports/component.txt'
                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports', reportFiles: 'component.txt', reportName: 'Component Test Report', reportTitles: 'Component Test Report'])
                 }
             }
@@ -67,15 +66,14 @@ pipeline {
         stage('Run component test coverage') {
             steps {
                 dir('frontend') {
-                    sh 'yarn run component-test-coverage'
+                    sh 'yarn run component-test-coverage  -u'
                 }
             }
         }
         stage('Create component test coverage report') {
             steps {
                 dir('frontend') {
-                    sh 'yarn run component-test-coverage 2> reports/component-coverage.txt'
-                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports', reportFiles: 'component-coverage.txt', reportName: 'Component Test Coverage Report', reportTitles: 'Component Test Coverage Report'])
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'Component Test Coverage Report', reportTitles: 'Component Test Coverage Report'])
                 }
             }
         }
