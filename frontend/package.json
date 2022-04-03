@@ -7,8 +7,10 @@
     "start": "next start",
     "lint": "next lint",
     "unit-test": "jest -i ./src/test/utils/formValidation.test.ts",
+    "unit-test-coverage": "jest -i ./src/test/utils/formValidation.test.ts --coverage",
     "e2e-test": "jest -i ./src/test/utils/e2e.test.ts",
-    "component-test": "jest -i ./src/test/utils/CreatePost.test.tsx"
+    "component-test": "jest -i ./src/test/utils/CreatePost.test.tsx",
+    "component-test-coverage": "jest -i ./src/test/utils/CreatePost.test.tsx  --coverage"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.1.5",
