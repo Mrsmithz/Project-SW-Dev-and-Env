@@ -17,7 +17,7 @@ pipeline {
         stage('Run unit test') {
             steps {
                 dir('frontend') {
-                    sh 'yarn unit-test'
+                    sh 'yarn run unit-test'
                 }
             }
         }
@@ -37,7 +37,7 @@ pipeline {
         stage('Run unit test coverage') {
             steps {
                 dir('frontend') {
-                    sh 'yarn unit-test-coverage'
+                    sh 'yarn run unit-test-coverage'
                 }
             }
         }
@@ -52,7 +52,7 @@ pipeline {
         stage('Run component test') {
             steps {
                 dir('frontend') {
-                    sh 'yarn component-test'
+                    sh 'yarn run component-test'
                 }
             }
         }
@@ -67,7 +67,7 @@ pipeline {
         stage('Run component test coverage') {
             steps {
                 dir('frontend') {
-                    sh 'yarn component-test-coverage'
+                    sh 'yarn run component-test-coverage'
                 }
             }
         }
