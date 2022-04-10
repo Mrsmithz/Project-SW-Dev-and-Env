@@ -77,6 +77,31 @@ pipeline {
                 }
             }
         }
+        stage('Build') {
+            steps {
+                dir('frontend') {
+                    sh 'yarn build'
+                }
+            }
+        }
+        stage('deploy') {
+            steps {
+                dir('frontend') {
+                    sshagent(credentials: ['dockie-ssh']) {
+                        sh 'ssh -o StrictHostKeyChecking=no mrsmithz@188.166.185.128 uptime'
+                        sh 'ssh -v mrsmithz@188.166.185.128'
+                        sh """
+                            ssh -v mrsmithz@188.166.185.128 << EOF
+                            cd app/Project-SW-Dev-and-Env/
+                            git pull
+                            cd deployment/
+                            docker-compose up -d --build next-app
+                            exit
+                        EOF"""
+                    }
+                }
+            }
+        }
         stage('Run E2E test') {
             steps {
                 dir('frontend') {
@@ -89,13 +114,6 @@ pipeline {
                 dir('frontend') {
                     sh 'yarn run e2e-test 2> reports/e2e.txt'
                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports', reportFiles: 'e2e.txt', reportName: 'E2E Test Report', reportTitles: 'E2E Test Report'])
-                }
-            }
-        }
-        stage('Build') {
-            steps {
-                dir('frontend') {
-                    sh 'yarn build'
                 }
             }
         }

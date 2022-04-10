@@ -46,5 +46,23 @@ pipeline {
                 }
             }
         }
+        stage('deploy') {
+            steps {
+                dir('backend') {
+                    sshagent(credentials: ['dockie-ssh']) {
+                        sh 'ssh -o StrictHostKeyChecking=no mrsmithz@188.166.185.128 uptime'
+                        sh 'ssh -v mrsmithz@188.166.185.128'
+                        sh """
+                            ssh -v mrsmithz@188.166.185.128 << EOF
+                            cd app/Project-SW-Dev-and-Env/
+                            git pull
+                            cd deployment/
+                            docker-compose up -d --build express-app
+                            exit
+                        EOF"""
+                    }
+                }
+            }
+        }
     }
 }
