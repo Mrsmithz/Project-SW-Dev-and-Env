@@ -4,6 +4,8 @@ import PostDetail from "../../components/post/PostDetail";
 import styles from '../../styles/CreatePost.module.scss'
 import { Stack } from "@chakra-ui/react";
 
+import { Comment } from '../../types/Comment'
+
 const postData = [
     {
         title: "Newest Post 1",
@@ -20,7 +22,15 @@ const postData = [
             "Tag4",
             "Tag5",
         ],
-        rating: 4
+        rating: 4,
+        avgRating: 4,
+        comment: [
+            {
+                author: "Name Lastname",
+                createdDate: new Date(),
+                comment: "Good",
+            }
+        ]
     },
     {
         title: "Newest Post 2",
@@ -37,7 +47,15 @@ const postData = [
             "Tag4",
             "Tag5",
         ],
-        rating: 3
+        rating: 3,
+        avgRating: 4,
+        comment: [
+            {
+                author: "Name Lastname",
+                createdDate: new Date(),
+                comment: "Good",
+            }
+        ]
     },
     {
         title: "Newest Post 3",
@@ -54,7 +72,15 @@ const postData = [
             "Tag4",
             "Tag5",
         ],
-        rating: 5
+        rating: 5,
+        avgRating: 4,
+        comment: [
+            {
+                author: "Name Lastname",
+                createdDate: new Date(),
+                comment: "Good",
+            }
+        ]
     },
     {
         title: "Newest Post 3",
@@ -71,14 +97,40 @@ const postData = [
             "Tag4",
             "Tag5",
         ],
-        rating: 5
+        rating: 5,
+        avgRating: 4,
+        comment: [
+            {
+                author: "Name Lastname",
+                createdDate: new Date(),
+                comment: "Good",
+            }
+        ]
     },
 ]
 
 interface Props {
     id: number
 }
-const PostDetailPage: NextPage<Props> = ({id}) => {
+const PostDetailPage: NextPage<Props> = ({ id }) => {
+    const addComment = (newComment: string) => {
+        const newCommentData = {
+            author: "Name Lastname",
+            createdDate: new Date(),
+            comment: newComment,
+        }
+        postData[id].comment.push(newCommentData);
+    }
+
+    const ratePost = (newRating : number) => {
+        postData[id].rating = newRating
+    }
+
+    const deleteComment = (comment: Comment) => {
+        const index = postData[id].comment.indexOf(comment)
+        postData[id].comment.splice(index, 1)
+    }
+
     return (
         <div>
             <Head>
@@ -86,7 +138,12 @@ const PostDetailPage: NextPage<Props> = ({id}) => {
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
             <Stack className={styles.container}>
-                <PostDetail postData={postData[id]}/>
+                <PostDetail 
+                    postData={postData[id]} 
+                    addComment={(newComment: string) => addComment(newComment)} 
+                    ratePost={(newRating: number) => ratePost(newRating)}
+                    deleteComment={(comment: Comment) => deleteComment(comment)}
+                />
             </Stack>
         </div>
     )
@@ -94,10 +151,10 @@ const PostDetailPage: NextPage<Props> = ({id}) => {
 export const getServerSideProps = (context: any) => {
     const { id } = context.query;
     return {
-      props: {
-        id,
-      },
+        props: {
+            id,
+        },
     };
-  };
+};
 
 export default PostDetailPage
