@@ -23,6 +23,10 @@ import { DeleteIcon } from '@chakra-ui/icons'
 
 import { Comment } from "../../types/Comment"
 
+import {
+    checkComment
+  } from '../../utils/feedbackPost';
+
 const size = { base: "100%", md: "80%", lg: "60%" };
 
 type Props = {
@@ -81,14 +85,14 @@ const PostDetail = ({ postData, addComment, ratePost, deleteComment }: Props) =>
         return starList;
     }
 
-    const zeroPad = (num, places) => String(num).padStart(places, '0')
+    const zeroPad = (num :number, places :number) => String(num).padStart(places, '0')
 
     const formatCommentDate = (date: Date) => {
         return date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + zeroPad(date.getHours(), 2) + ":" + zeroPad(date.getMinutes(), 2);
     }
 
     const addNewComment = () => {
-        if (newComment.trim() !== "") {
+        if (checkComment(newComment.trim()) === "") {
             addComment(newComment)
             setUpdateKey(updateKey + 1)
             setNewComment("")
