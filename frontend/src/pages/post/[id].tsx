@@ -6,10 +6,6 @@ import { Stack } from "@chakra-ui/react";
 
 import { Comment } from '../../types/Comment'
 
-import {
-    checkComment
-  } from '../../utils/feedbackPost';
-
 const postData = [
     {
         title: "Newest Post 1",
