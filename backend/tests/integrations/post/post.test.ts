@@ -2,6 +2,7 @@ import supertest, { SuperAgentTest} from 'supertest'
 import { app } from '../../../App'
 import path from 'path'
 import { connectDB, disconnectDB, clearDB} from '../../../src/utils/db'
+import { connectGridFS, closeGridFSConnection} from '../../../src/utils/uploadsBucket'
 import { Status } from '../../../src/types/post/Status.enum'
 import { ICreatePost } from '../../../src/types/rest/post/CreatePost.type'
 import { MongoMemoryServer } from 'mongodb-memory-server'
@@ -11,14 +12,17 @@ const isArrayOfString = (arr : []) => {
 let mongo : MongoMemoryServer = null
 
 describe('Post API Endpoints', () => {
+    jest.setTimeout(20000)
 
     beforeAll(async () : Promise<void> => {
         mongo = await MongoMemoryServer.create()
         const uri = mongo.getUri()
         await connectDB(uri)
+        await connectGridFS(uri)
     })
     afterAll(async () : Promise<void> => {
         await disconnectDB()
+        await closeGridFSConnection()
         await mongo.stop()
     })
     afterEach(async () : Promise<void> => {

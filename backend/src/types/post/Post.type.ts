@@ -10,5 +10,6 @@ export interface IPost {
     status:Status,
     owner?:mongoose.Types.ObjectId
     file:mongoose.Types.ObjectId,
-    images:mongoose.Types.ObjectId[]
+    images:mongoose.Types.ObjectId[],
+    document?:Object
 }
