@@ -3,7 +3,7 @@ import fsPromises from 'fs/promises'
 import { UploadFiles } from '../types/rest/UploadFiles.type'
 import dotenv from 'dotenv'
 import {Request, Response, NextFunction } from 'express'
-dotenv.config()
+dotenv.config({path: `.env.${process.env.NODE_ENV}`})
 const projectId = process.env.PROJECT_ID
 const location = process.env.PROJECT_LOCATION
 const processorId = process.env.PROCESSOR_ID
