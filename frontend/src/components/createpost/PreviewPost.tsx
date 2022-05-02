@@ -14,6 +14,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import axios from 'axios'
 
 import styles from '../../styles/CreatePost.module.scss'
 
@@ -21,12 +22,26 @@ import { CreatedPost } from '../../types/CreatedPost'
 
 type Props = {
   postData: CreatedPost,
-  backPage: Function
+  backPage: Function,
+  file: File
 };
 
 const size = { base: "100%", md: "80%", lg: "60%" };
 
-const PreviewPost = ({ postData, backPage }: Props) => {
+const API_LINK = process.env.NEXT_PUBLIC_API_LINK
+
+const PreviewPost = ({ postData, backPage, file }: Props) => {
+  const createPost = async () => {
+    const formData = new FormData()
+    formData.append("file", file)
+    for (let i = 0; i < postData.image.length; i++) {
+      formData.append("images", postData.image[i])
+    }
+    formData.append("title", postData.title)
+    formData.append("status", postData.permission)
+    const res = await axios.post(`${API_LINK}/posts/create`, formData)
+  }
+
   return (
     <>
       <Stack>
@@ -60,7 +75,7 @@ const PreviewPost = ({ postData, backPage }: Props) => {
                   <div id="contact">
                     {postData.contact}
                   </div>
-                  
+
                 </Text>
               </Center>
             </GridItem>
@@ -72,7 +87,7 @@ const PreviewPost = ({ postData, backPage }: Props) => {
                 bg={useColorModeValue("gray.100", "gray.600")}
                 borderRadius={20}
               >
-                <Text fontSize={20}>Title : <div id="title">{ postData.title }</div> </Text>
+                <Text fontSize={20}>Title : <div id="title">{postData.title}</div> </Text>
                 <Text fontSize={20}>Description</Text>
                 <Box
                   bg={useColorModeValue("blue.200", "gray.700")}
@@ -104,12 +119,12 @@ const PreviewPost = ({ postData, backPage }: Props) => {
 
                     {postData.tag.map((item, index) => (
                       <Tag ml={2} colorScheme="teal" key={`tag-${index}`}>
-                        { item }
+                        { item}
                       </Tag>
                     ))}
                   </GridItem>
                 </Grid>
-                <Text fontSize={16} marginTop="0.5rem" paddingLeft="0.5rem">Permission : { postData.permission } </Text>
+                <Text fontSize={16} marginTop="0.5rem" paddingLeft="0.5rem">Permission : {postData.permission} </Text>
               </Box>
             </GridItem>
             <GridItem
@@ -131,12 +146,12 @@ const PreviewPost = ({ postData, backPage }: Props) => {
                 <Box bg={"gray.300"} h={{ base: 150, lg: 220 }}></Box>
                 <Box bg={"gray.300"} h={{ base: 150, lg: 220 }}></Box> */}
 
-                { postData.image.map((item, index) => (
-                  <Box  key={`image-${index}`} height="13rem"
-                  className={styles.previewImage}>
+                {postData.image.map((item, index) => (
+                  <Box key={`image-${index}`} height="13rem"
+                    className={styles.previewImage}>
                     <img src={URL.createObjectURL(item)} />
                   </Box>
-                )) }
+                ))}
               </SimpleGrid>
             </GridItem>
             <GridItem
@@ -151,11 +166,9 @@ const PreviewPost = ({ postData, backPage }: Props) => {
                 </Button>
               </Flex>
               <Flex justify={"center"}>
-                <Link href={"/"} passHref>
-                  <Button w={"80%"} colorScheme="blue" variant="solid" mt={5}>
-                    <div id="finish-btn">Finish</div>
-                  </Button>
-                </Link>
+                <Button w={"80%"} colorScheme="blue" variant="solid" mt={5} onClick={() => createPost()}>
+                  <div id="finish-btn">Finish</div>
+                </Button>
               </Flex>
             </GridItem>
           </Grid>
