@@ -10,6 +10,6 @@ COPY ./ ./
 
 RUN npm run test
 
-EXPOSE 8000
+EXPOSE 8349
 
 CMD ["npm", "run", "build"]

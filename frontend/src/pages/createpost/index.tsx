@@ -52,7 +52,7 @@ const CreatePost: NextPage = () => {
       return (<CreatePostForm toNextPage={(data: CreatedPost) => getDataFromForm(data)}
         backPage={() => backButtonHandler()}/>);
     }
-    else if (taskState == 3) {
+    else if (taskState == 3 && file != null) {
       return (<PreviewPost postData={postData} backPage={() => backButtonHandler()} file={file}/>);
     }
   };
