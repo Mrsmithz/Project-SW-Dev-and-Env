@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import axios from 'axios'
+import { useRouter } from 'next/router'
 
 import styles from '../../styles/CreatePost.module.scss'
 
@@ -41,7 +42,10 @@ const PreviewPost = ({ postData, backPage, file }: Props) => {
     formData.append("status", postData.permission)
     const res = await axios.post(`${API_LINK}/posts/create`, formData)
     console.log(res.data)
+    router.push('/')
   }
+
+  const router = useRouter()
 
   return (
     <>
@@ -72,7 +76,7 @@ const PreviewPost = ({ postData, backPage, file }: Props) => {
                 </Text>
               </Center>
               <Center>
-                <Text fontSize={{ base: 20, lg: 20, md: 40, sm: 40 }}>
+                <Text fontSize={{ base: 20, lg: 20, md: 40, sm: 40 }} >
                   <div id="contact">
                     {postData.contact}
                   </div>
