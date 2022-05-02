@@ -4,6 +4,8 @@ import { ChakraProvider } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import { extendTheme } from "@chakra-ui/react";
 import "@fontsource/prompt/400.css"
+import client from '../utils/apollo-client'
+import { ApolloProvider } from '@apollo/client'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const theme = extendTheme({
@@ -12,10 +14,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     },
   });
   return (
-    <ChakraProvider theme={theme}>
-      <Navbar />
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <ApolloProvider client={client}>
+      <ChakraProvider theme={theme}>
+        <Navbar />
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </ApolloProvider>
   );
 }
 
