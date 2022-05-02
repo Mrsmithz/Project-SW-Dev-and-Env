@@ -50,10 +50,10 @@ const CreatePost: NextPage = () => {
     }
     else if (taskState == 2) {
       return (<CreatePostForm toNextPage={(data: CreatedPost) => getDataFromForm(data)}
-        backPage={() => backButtonHandler()} />);
+        backPage={() => backButtonHandler()}/>);
     }
     else if (taskState == 3) {
-      return (<PreviewPost postData={postData} backPage={() => backButtonHandler()} />);
+      return (<PreviewPost postData={postData} backPage={() => backButtonHandler()} file={file}/>);
     }
   };
 
@@ -61,7 +61,6 @@ const CreatePost: NextPage = () => {
     setTaskState(2);
   }
   const getDataFromForm = (data: CreatedPost) => {
-    console.log(data);
     setPostData(data);
     setTaskState(3);
   }

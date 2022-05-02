@@ -62,7 +62,7 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
   const [tagInput, setTagInput] = useState("");
   const handleTagInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setTagInput(e.target.value);
 
-  const [permission, setPermission] = useState('');
+  const [permission, setPermission] = useState('public');
   const handlePermissionChange = (e: React.ChangeEvent<HTMLSelectElement>) => setPermission(e.target.value);
 
   const [images, setImages] = useState<File[]>([]);
@@ -308,7 +308,7 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
         </Box>
 
         <Stack w="100%" marginTop="2.5rem">
-          <Button colorScheme="teal" width="12rem" size="lg">Auto Fill By OCR</Button>
+          {/* <Button colorScheme="teal" width="12rem" size="lg" onClick={() => ocrButtonHandler()}>Auto Fill By OCR</Button> */}
           <Stack w="100%" marginTop="0.5rem" direction="row">
             <Button colorScheme="teal" width="8rem" size="lg"
               onClick={() => backPage()}>Back</Button>
