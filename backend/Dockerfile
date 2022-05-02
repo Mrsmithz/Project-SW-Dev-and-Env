@@ -1,4 +1,4 @@
-FROM node:16.14-alpine
+FROM node:16.14
 
 WORKDIR /usr/app
 
@@ -8,6 +8,8 @@ RUN npm install
 
 COPY ./ ./
 
+RUN npm run test
+
 EXPOSE 8000
 
-CMD ["npm", "run", "serve"]
+CMD ["npm", "run", "build"]
