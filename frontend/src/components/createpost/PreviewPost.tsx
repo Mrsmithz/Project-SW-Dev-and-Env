@@ -40,6 +40,7 @@ const PreviewPost = ({ postData, backPage, file }: Props) => {
     formData.append("title", postData.title)
     formData.append("status", postData.permission)
     const res = await axios.post(`${API_LINK}/posts/create`, formData)
+    console.log(res.data)
   }
 
   return (

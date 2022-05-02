@@ -62,7 +62,7 @@ const CreatePostForm = ({ toNextPage, backPage }: Props) => {
   const [tagInput, setTagInput] = useState("");
   const handleTagInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setTagInput(e.target.value);
 
-  const [permission, setPermission] = useState('');
+  const [permission, setPermission] = useState('public');
   const handlePermissionChange = (e: React.ChangeEvent<HTMLSelectElement>) => setPermission(e.target.value);
 
   const [images, setImages] = useState<File[]>([]);
