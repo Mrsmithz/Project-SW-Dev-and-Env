@@ -86,19 +86,17 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                dir('frontend') {
-                    sshagent(credentials: ['dockie-ssh']) {
-                        sh 'ssh -o StrictHostKeyChecking=no mrsmithz@188.166.185.128 uptime'
-                        sh 'ssh -v mrsmithz@188.166.185.128'
-                        sh """
-                            ssh -v mrsmithz@188.166.185.128 << EOF
-                            cd app/Project-SW-Dev-and-Env/
-                            git pull
-                            cd deployment/
-                            docker-compose up -d --build next-app
-                            exit
-                        EOF"""
-                    }
+                script  {
+                    def remote = [:]
+                    remote.name = "root"
+                    remote.host = '159.65.12.177'
+                    remote.user = 'root'
+                    remote.password = 'xitgmLwmp12q'
+                    remote.allowAnyHosts = true
+                    sshCommand remote: remote, command: "git clone https://github.com/Mrsmithz/Project-SW-Dev-and-Env.git"
+                    sshCommand remote: remote, command: "docker-compose -f Project-SW-Dev-and-Env/deployment/docker-compose.yaml build next-app"
+                    sshCommand remote: remote, command: "docker-compose -f Project-SW-Dev-and-Env/deployment/docker-compose.yaml up next-app -d"
+                    sshCommand remote: remote, command: "rm -r Project-SW-Dev-and-Env"
                 }
             }
         }
