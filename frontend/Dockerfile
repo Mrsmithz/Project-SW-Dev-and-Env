@@ -17,5 +17,5 @@ RUN npm run build
 
 EXPOSE 3493
 
-CMD ["npm", "start", "--", "-p 3493"]
+CMD ["npm", "start", "--", "-p", "3493"]
 
