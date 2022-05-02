@@ -33,13 +33,14 @@ type Props = {
     postData: any
     addComment: Function
     ratePost: Function
-    deleteComment: Function
+    deleteComment: Function,
+    Detail: any
 }
 
-const PostDetail = ({ postData, addComment, ratePost, deleteComment }: Props) => {
+const PostDetail = ({ postData, addComment, ratePost, deleteComment, Detail}: Props) => {
 
     const [newComment, setNewComment] = useState("");
-    const [rating, setRating] = useState(postData.rating);
+    const [rating, setRating] = useState(postData.ratings);
     const [newRating, setNewRating] = useState(0);
 
     const [deleteCommentTemp, setDeleteCommentTemp] = useState({});
@@ -169,7 +170,7 @@ const PostDetail = ({ postData, addComment, ratePost, deleteComment }: Props) =>
                                 bg={useColorModeValue("gray.100", "gray.600")}
                                 borderRadius={20}
                             >
-                                <Text fontSize={20}>Title : {postData.title}</Text>
+                                <Text fontSize={20}>Title : {Detail?.title}</Text>
                                 <Text fontSize={20}>Description</Text>
                                 <Box
                                     bg={useColorModeValue("blue.200", "gray.700")}
@@ -179,7 +180,7 @@ const PostDetail = ({ postData, addComment, ratePost, deleteComment }: Props) =>
                                     mt={2}
                                     mb={5}
                                 >
-                                    <Text fontSize={15}> {postData.description} </Text>
+                                    <Text fontSize={15}> {Detail?.document.text} </Text>
                                 </Box>
                                 <Grid templateColumns="repeat(12, 1fr)">
                                     <GridItem
@@ -196,7 +197,7 @@ const PostDetail = ({ postData, addComment, ratePost, deleteComment }: Props) =>
                                         ))}
                                     </GridItem>
                                 </Grid>
-                                <Text fontSize={16} marginTop="0.5rem" paddingLeft="0.5rem">Permission : {postData.permission} </Text>
+                                <Text fontSize={16} marginTop="0.5rem" paddingLeft="0.5rem">Permission : {Detail?.status} </Text>
                                 <Box marginTop="0.25rem" paddingLeft="0.75rem">
                                     <Text>Average Rating</Text>
                                     <Stack direction="row" pr={10}>
@@ -312,7 +313,7 @@ const PostDetail = ({ postData, addComment, ratePost, deleteComment }: Props) =>
                 handleRatingModal={() => handleRatingModal()}
             />
 
-            <DeleteCommentModal 
+            <DeleteCommentModal
                 isOpen={isOpenDeleteModal}
                 onClose={() => onCloseDeleteModal}
                 handleDeleteModal={() => handleDeleteModal()}

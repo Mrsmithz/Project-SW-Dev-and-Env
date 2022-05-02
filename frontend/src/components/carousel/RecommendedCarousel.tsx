@@ -88,7 +88,7 @@ const RecommendedCarousel: NextPage<{ data: any }> = ({ data }) => {
                     }
                 }}
             >
-                {data.map((card: any, index: number) => {
+                {data?.map((card: any, index: number) => {
                     return (
                         <SwiperSlide
                             key={index}

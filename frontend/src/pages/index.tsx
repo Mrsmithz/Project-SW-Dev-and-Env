@@ -9,7 +9,8 @@ import RecommendedCarousel from '../components/carousel/RecommendedCarousel'
 import styles from '../styles/Home.module.scss'
 import HistoryPostList from '../components/home/HistoryPostList'
 import Fab from '../components/createpost/Fab'
-
+import { gql, useQuery } from '@apollo/client'
+import { useEffect } from 'react'
 const newestPostData = [
   {
     title: "Newest Post 1",
@@ -96,7 +97,23 @@ const historyPostData = [
     duration : "4m"
   }
 ]
+
+const GET_ALL_POSTS = gql`
+  query Post{
+    posts{
+      _id,
+      title,
+      document,
+      status
+    }
+  }
+`
 const Home: NextPage = () => {
+  const { loading, error, data} = useQuery(GET_ALL_POSTS)
+
+  useEffect(() => {
+    console.log(data)
+  }, [data])
   return (
     <>
 
@@ -108,7 +125,7 @@ const Home: NextPage = () => {
       <Box className={styles.container} >
 
         <Box  width={{ base: '100%', sm: '90%', md: '90%', lg: '90%', xl: '75%' }}>
-          <RecommendedCarousel data={newestPostData}></RecommendedCarousel>
+          <RecommendedCarousel data={data?.posts}></RecommendedCarousel>
         </Box>
 
         {/* Bottom Carousel Component */}
