@@ -4,9 +4,19 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import PostRouter from './src/router/post.router'
 
+dotenv.config({path: `.env.${process.env.NODE_ENV}`})
+
+declare global {
+    namespace Express {
+      interface Request {
+        document?: Object,
+        documentFile?: File
+      }
+    }
+  }
+
 
 const ContextPath : String = '/api/v1';
-dotenv.config()
 const app : Application = express()
 
 app.use(morgan('dev'))

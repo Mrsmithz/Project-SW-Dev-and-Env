@@ -6,13 +6,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "unit-test": "jest -i ./src/test/utils/formValidation.test.ts",
+    "unit-test": "jest -i ./src/test/utils/formValidation.test.ts ./src/test/utils/feedbackPost.test.ts",
     "unit-test-coverage": "jest -i ./src/test/utils/formValidation.test.ts --coverage",
     "e2e-test": "jest -i ./src/test/utils/e2e.test.ts",
     "component-test": "jest -i ./src/test/utils/CreatePost.test.tsx",
     "component-test-coverage": "jest -i ./src/test/utils/CreatePost.test.tsx  --coverage"
   },
   "dependencies": {
+    "@apollo/client": "^3.6.1",
     "@chakra-ui/icons": "^1.1.5",
     "@chakra-ui/react": "^1.8.3",
     "@emotion/react": "^11",
@@ -24,6 +25,7 @@
     "@types/puppeteer": "^5.4.5",
     "axios": "^0.25.0",
     "framer-motion": "^5",
+    "graphql": "^16.4.0",
     "identity-obj-proxy": "^3.0.0",
     "jquery": "^3.6.0",
     "next": "12.0.10",

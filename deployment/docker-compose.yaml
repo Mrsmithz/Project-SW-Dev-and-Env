@@ -10,12 +10,12 @@ services:
       context: ../frontend/
       dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - 3493:3493
   express-app:
     build:
       context: ../backend/
       dockerfile: Dockerfile
     ports:
-      - 8000:8000
+      - 8349:8349
     environment:
       - MONGODB_URI=${MONGODB_URI}

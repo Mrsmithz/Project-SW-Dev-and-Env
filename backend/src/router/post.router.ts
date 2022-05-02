@@ -1,12 +1,14 @@
 import { NextFunction, Router, Request, Response, } from "express"
 import { graphqlHTTP } from "express-graphql"
 import PostSchema from '../model/Post'
-import { upload } from '../utils/GridFsStorage'
 import { MulterError } from "multer"
 import { createPost } from '../controller/PostController'
-
+import { DocumentProcessor } from '../controller/OCRController'
+import multer from 'multer'
+import { memoryStorage } from "multer"
 const router : Router = Router()
-const filesUpload = upload.fields([
+const uploadLocal = multer({ dest: 'uploads/' })
+const uploadLocalFields = uploadLocal.fields([
     {
         name:'file',
         maxCount:1
@@ -16,19 +18,7 @@ const filesUpload = upload.fields([
         maxCount:3
     }
 ])
-router.post('/create', (req : Request, res : Response, next : NextFunction) => {
-    filesUpload(req, res, (err) => {
-        if (err instanceof MulterError){
-            console.log(err)
-            res.status(400).json({
-                error:err.code
-            }).end()
-        }
-        else{
-            next()
-        }
-    })
-}, createPost)
+router.post('/create', uploadLocalFields, DocumentProcessor, createPost)
 
 router.use('/', graphqlHTTP({
     schema:PostSchema,

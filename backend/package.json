@@ -4,8 +4,8 @@
   "description": "A backend for Docker application",
   "main": "index.ts",
   "scripts": {
-    "dev": "nodemon index.ts",
-    "serve": "ts-node index.ts",
+    "dev": "NODE_ENV=dev nodemon index.ts",
+    "build": "NODE_ENV=prd ts-node index.ts",
     "test": "jest --coverage --detectOpenHandles"
   },
   "repository": {

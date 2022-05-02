@@ -52,7 +52,8 @@ const PostSchema : Schema = new Schema({
             type:Schema.Types.ObjectId,
             ref:'Comment'
         }
-    ]
+    ],
+    document:Object
 })
 PostSchema.plugin(timestamp)
 const Post = model('Post', PostSchema)
