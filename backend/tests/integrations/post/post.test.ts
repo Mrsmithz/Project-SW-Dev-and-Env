@@ -46,4 +46,50 @@ describe('Post API Endpoints', () => {
         expect(typeof body.file).toBe('string')
         expect(isArrayOfString(body.images)).toBe(true)
     })
+    it('Should return created post', async () => {
+        const post : ICreatePost = {
+            title: 'test create post',
+            status: Status.PRIVATE
+        }
+        const response = await supertest(app)
+        .post('/api/v1/posts/create')
+        .attach('file', path.join(__dirname, '/test-pdf.pdf'))
+        .attach('images', path.join(__dirname, '/test-image.png'))
+        .field('title', post.title)
+        .field('status', post.status)
+        const { body, statusCode} = response
+        expect(statusCode).toBe(201)
+
+        const fetchPost = await supertest(app)
+        .post('/api/v1/posts/')
+        .send({
+            query: '{ post { title }}'
+        })
+        const responseBody = fetchPost.body
+        expect(responseBody.data.post.title).toEqual(post.title)
+    })
+    it('Should return created post', async () => {
+        const post : ICreatePost = {
+            title: 'test create post',
+            status: Status.PRIVATE
+        }
+        for (let i = 0; i < 2; i++){
+            const response = await supertest(app)
+            .post('/api/v1/posts/create')
+            .attach('file', path.join(__dirname, '/test-pdf.pdf'))
+            .attach('images', path.join(__dirname, '/test-image.png'))
+            .field('title', post.title)
+            .field('status', post.status)
+            const { body, statusCode} = response
+            expect(statusCode).toBe(201)
+        }
+
+        const fetchPost = await supertest(app)
+        .post('/api/v1/posts/')
+        .send({
+            query: '{ postCount }'
+        })
+        const responseBody = fetchPost.body
+        expect(responseBody.data.postCount).toEqual(2)
+    })
 })

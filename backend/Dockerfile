@@ -12,4 +12,4 @@ RUN npm run test
 
 EXPOSE 8000
 
-CMD ["npm", "run", "serve"]
+CMD ["npm", "run", "build"]
