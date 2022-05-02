@@ -94,9 +94,9 @@ const RecommendedCard: NextPage<{ item: any }> = ({ item }) => {
                         </Tag>
                     ))} */}
                 </Flex>
-                <Box w={'100%'} mt={3} textAlign={'left'}>
+                {/* <Box w={'100%'} mt={3} textAlign={'left'}>
                     {renderRating(item.rating)}
-                </Box>
+                </Box> */}
             </Box>
         </Button>
     )
